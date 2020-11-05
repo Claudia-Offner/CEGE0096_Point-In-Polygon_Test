@@ -20,6 +20,25 @@ if __name__ == "__main__":
 
 # Import polygon_points & input_points data
 
+with open('polygon.csv') as f:
+    poly_point = f.readlines()
+    for line in poly_point:
+       print(line.rstrip().split(','))
+            #index represents column
+            #source: https://www.youtube.com/watch?v=GBD4na8AQjY
+    print(poly_point)
+
+with open('input.csv') as f:
+    next(f) #remove header
+    input_points = []
+    for line in f:
+        point = line.rstrip().split('\t')
+        input_points.append(point)
+
+print(input_points)
+
+
+
 #CLASS Creator
     #METHOD read lines
         #clockwise, in order, as integers
