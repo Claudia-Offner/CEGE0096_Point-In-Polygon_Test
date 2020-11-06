@@ -1,5 +1,5 @@
 
-#READ LIST OF POINTS, X, Y FROM CSV FILE
+#FILE READER. OUTPUT: POINTS, X's, Y's
 with open(path, 'r') as f:
     data = f.readlines()[1:] #skip header
     poly_points = []
@@ -9,26 +9,16 @@ with open(path, 'r') as f:
         res = line.rstrip().split(',')[1:]  # split by line
         res = [float(i) for i in res]  # convert to integers
         poly_points.append(res)
-    poly_x = [i[0] for i in poly_points]
-    poly_y = [i[1] for i in poly_points]
+    poly_x = [i[0] for i in poly_points] #extract x column
+    poly_y = [i[1] for i in poly_points] #extract y column
 print(poly_points)
 print(poly_x)
 print(poly_y)
-
-####set main, give path a string (make it relative, not pc based)
-
+####set main, give path a string (make it relative, not pc based) --> NEEDS FIXING
 
 
 
-##HELPFUL
-## https://rosettacode.org/wiki/Ray-casting_algorithm#Python
-## http://philliplemons.com/posts/ray-casting-algorithm
-## https://excalibur.apache.org/framework/best-practices.html
-
-#A way to extract just the x column from CSV
-# A way to
-
-
+### LECTURE CLASS EXAMPLE ###
 class Geometry:
     def __init__(self, name):
         self.__name = name
@@ -70,7 +60,12 @@ class Polygon(Geometry):
 
 
 
+###PSEUDO CODE IDEAS####
 
+##HELPFUL
+## https://rosettacode.org/wiki/Ray-casting_algorithm#Python
+## http://philliplemons.com/posts/ray-casting-algorithm
+## https://excalibur.apache.org/framework/best-practices.html
 
 #CLASS Creator
     #METHOD read points
