@@ -39,10 +39,43 @@ plotter.add_polygon(poly_x, poly_y)
 plotter.add_point(input_x, input_y)
 plotter.show()
 
-## Create a polygon OBJECT from poly_points in clockwise order as polygon_obj (obj)
-## READ list of x,y coordinates from INPUT.CSV as input_points (list)
-
 # CATEGORISE input_points as inside, outside or boundary and save to category_result (list)
+
+#MBR
+#METHOD mini
+def min_(a):
+    res = a[0]
+    for i in a:
+        if i < res:
+            res = i
+    return res
+#METHOD maxi
+def max_(a):
+    res = a[0]
+    for i in a:
+        if i > res:
+            res = i
+    return res
+
+x_min_max = []
+y_min_max = []
+x_min_max.append(min_(poly_x))
+y_min_max.append(min_(poly_y))
+x_min_max.append(max_(poly_x))
+y_min_max.append(max_(poly_y))
+
+print(x_min_max)
+print(y_min_max)
+
+mbr = input_points
+for i in input_points:
+    if min_(poly_x) < i[0] < max_(poly_x) AND min_(poly_y) < i[1] < max_(poly_y):
+        mbr.append(True)
+    else:
+        mbr.append(False)
+
+print(mbr)
+
 
 # WRITE the category_result to a CSV file
 

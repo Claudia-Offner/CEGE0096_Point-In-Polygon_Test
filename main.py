@@ -57,7 +57,7 @@ class Polygon(Geometry):
         res.append(Line(point_a.get_name() + '-' + points[0].get_name(), point_a, points[0]))
         return res
 
-
+## STATISTICS CLASS ##
 
 
 ###PSEUDO CODE IDEAS####
@@ -90,10 +90,21 @@ class Polygon(Geometry):
 
 #SUB CLASS MBR (PIP_Test)
     #(for points)
-    #METHOD mini
-        #extract minimum values from x and y columns; as x_min and y_min
-    #METHOD maxi
-        #extract maximum values from x and y columns; as x_max and y_max
+    # METHOD mini
+    def min_(a):
+        res = a[0]
+        for i in a:
+            if i < res:
+                res = i
+        return res
+
+    # METHOD maxi
+    def max_(a):
+        res = a[0]
+        for i in a:
+            if i > res:
+                res = i
+        return res
     #METHOD get_MBR
         #extract list of points inside and outside rectangle; as MBR_results
         # IF x_min < point.x < x_max AND y_min < point.y < y.max:
