@@ -1,5 +1,52 @@
 from plotter import Plotter
 
+##Import code from FUNCTION/CLASS file here
+
+## READ list of x,y coordinates from POLGYON.CSV as poly_points (list)
+
+with open('polygon.csv', 'r') as f:
+    data = f.readlines()[1:] #skip header
+    poly_points = []
+    poly_x = []
+    poly_y = []
+    for line in data:
+        res = line.rstrip().split(',')[1:] #split by line
+        res = [float(i) for i in res] #convert to integers
+        poly_points.append(res)
+    poly_x = [i[0] for i in poly_points]
+    poly_y = [i[1] for i in poly_points]
+print(poly_points)
+print(poly_x)
+print(poly_y)
+
+with open('input.csv', 'r') as f:
+    data = f.readlines()[1:] #skip header
+    input_points = []
+    input_x = []
+    input_y = []
+    for line in data:
+        res = line.rstrip().split(',')[1:] #split by line
+        res = [float(i) for i in res] #convert to integers
+        input_points.append(res)
+    input_x = [i[0] for i in input_points]
+    input_y = [i[1] for i in input_points]
+print(input_points)
+print(input_x)
+print(input_y)
+
+plotter = Plotter()
+plotter.add_polygon(poly_x, poly_y)
+plotter.add_point(input_x, input_y)
+plotter.show()
+
+## Create a polygon OBJECT from poly_points in clockwise order as polygon_obj (obj)
+## READ list of x,y coordinates from INPUT.CSV as input_points (list)
+
+# CATEGORISE input_points as inside, outside or boundary and save to category_result (list)
+
+# WRITE the category_result to a CSV file
+
+# PLOT the points and polygon in a plot window
 
 def main():
     plotter = Plotter()
@@ -14,136 +61,8 @@ def main():
     print("plot polygon and points")
     #plotter.show()
 
+##Put your solution here ^^^
 
 if __name__ == "__main__":
     main()
-
-# Import polygon_points & input_points data
-
-with open('polygon.csv') as f:
-    poly_point = f.readlines()
-    for line in poly_point:
-       print(line.rstrip().split(','))
-            #index represents column
-            #source: https://www.youtube.com/watch?v=GBD4na8AQjY
-    print(poly_point)
-
-with open('input.csv') as f:
-    next(f) #remove header
-    input_points = []
-    for line in f:
-        point = line.rstrip().split('\t')
-        input_points.append(point)
-
-print(input_points)
-
-
-
-#CLASS Creator
-    #METHOD read lines
-        #clockwise, in order, as integers
-
-#SUB CLASS Point_creator (Creator)
-    #METHOD create points
-        #extract y values from list and combine with a standard infinite x-value; output list to input_infinite
-
-#SUB CLASS Line_creator (Creator)
-    #METHOD connect points within lists
-        #connect polygon_points; output list to polygon_side
-    #METHOD connect points between lists
-        #connect input_points with corresponding input_infinite points; output list to input_rays
-
-
-#CLASS PIP_test
-    #METHOD set as points
-        #lists used as coordinates
-    #METHOD set as lines
-        #lists used as lines
-
-#SUB CLASS MBR (PIP_Test)
-    #(for points)
-    #METHOD mini
-        #extract minimum values from x and y columns; as x_min and y_min
-    #METHOD maxi
-        #extract maximum values from x and y columns; as x_max and y_max
-    #METHOD get_MBR
-        #extract list of points inside and outside rectangle; as MBR_results
-        # IF x_min < point.x < x_max AND y_min < point.y < y.max:
-            # THEN point is inside the MBR = TRUE (but we don't know about the polygon)
-        # ELSE:
-            # THEN point is outside the MBR = FALSE
-
-#SUB CLASS Line_Crossing (PIP_test)
-    #(for lines)
-    #METHOD self
-        #equation_list
-    #METHOD slope
-        #extract slope of lines; output to a new column in equation_list (do for both polygon_sides and input_rays)
-    #METHOD y_int
-        #extract y-int of a line list; ouput to a new column in equation_list (do for both polygon_sides and input_rays)
-    #METHOD sorter
-        #evaluate input_rays against each polygon_sides and sort them into parallel(same slope), coinciding(same slope & y-int) or intersecting
-        #IF NOT coinciding OR parallel
-            #THEN find the intersecting point
-    #METHOD intersection
-        #extract intersecting point for each input_ray on every
-        #FOR each input_ray in range of polygon_sides
-            #IF ray is NOT parallel to the x-axis
-                #x point = (yintL - yintR)/(slopeR - slopeL)
-                #y point = (yintL*slopeR - yintR*slopeL)/ (slopeR-slopeL)
-            #ELSE
-                #x point = (yintL - yR)/slopeR
-                #y point = yR
-    #METHOD checker
-        #Check intersection point against the MBR(ray) and MBR(line)
-        #IF intersection inside MBR(ray) AND MBR(side)set to TRUE
-
-
- #SUB CLASS RCA (PIP_test)
-    #(for lines)
-    #METHOD get_rca
-        #Extract analysis; output to RCA_results
-        #SET counting to 0
-        #FOR each line of polygon:
-            #IF ray crosses the line = TRUE:
-                #THEN INC counting by 1
-        #IF counting is odd:
-            #THEN the point is inside
-        #ELSE
-            #THEN the point is outside
-
-#SUB CLASS Point_on_line (RCA)
-    #(for points)
-    #METHOD get_boundary
-        # Update RCA_results with boundary identification
-        # FOR each input point(x3, y3) and each line (x1,y1,x2,y2):
-                #IF x3,y3 is outside MBR
-                    #THEN input is NOT on boundary (FALSE)
-                #ELIF (x3-x1)/(x2-x1) * (y2-y1) + y1 = y3:
-                    #THEN input point IS on the boundary (TRUE)
-                #ELIF x3 = x1 OR x3 = x2:
-                    #THEN input IS on the boundary (TRUE)
-                #ELSE:
-                    #THEN the point is NOT on the boundary (FALSE)
-
-#SUB CLASS Point_on_vertices (RCA)
-    #(for points)
-    #METHOD get_vertices
-        #Update RCA_results so that false positives/negatives are corrected
-        #FOR ray in range(polygon_line)
-            #IF current_line AND previous_line > ray y coordinate
-                #THEN count none
-            #ELIF current_line AND previous_line < ray y coordinate
-                #THEN count none
-            #ELSE
-                #Then count one
-
-#POLY CLASS Point_on_vertices
-    # Point Crossing Vertices Algorithm (lines paralell with the x-axis)
-    #???
-
-
-# Write the result of each point in a CSV file;
-# Plot the points and polygon in a plot window
-
 
