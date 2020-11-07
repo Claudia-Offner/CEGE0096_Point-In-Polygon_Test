@@ -39,36 +39,20 @@ plotter = Plotter()
 # plotter.add_point(input_x, input_y)
 # plotter.show()
 
+#MATRIX CREATOR: combine mbr results with data points (from columns to rows AND rows to columns)
+def transpose_matrix(matrix):
+    res = []
+    result = [[matrix[j][i] for j in range(len(matrix))] for i in range(len(matrix[0]))] #https://www.programiz.com/python-programming/examples/transpose-matrix
+    for r in result:
+        res.append(r)
+    return res
+
 # CATEGORISE input_points as inside, outside or boundary and save to category_result (list)
 
 ######MBR#######
 
-# mini
-def min_(a):
-    res = a[0]
-    for i in a:
-        if i < res:
-            res = i
-    return res
-# maxi
-def max_(a):
-    res = a[0]
-    for i in a:
-        if i > res:
-            res = i
-    return res
 
-x_min_max = []
-y_min_max = []
-x_min_max.append(min_(poly_x))
-y_min_max.append(min_(poly_y))
-x_min_max.append(max_(poly_x))
-y_min_max.append(max_(poly_y))
-
-print(x_min_max)
-print(y_min_max)
-
-##MBR box
+##MBR box_coords
 def mbr_box(coords): #source: https://stackoverflow.com/questions/20808393/python-defining-a-minimum-bounding-rectangle
 
   min_x = 100000 # start with something much higher than expected min
@@ -89,7 +73,6 @@ def mbr_box(coords): #source: https://stackoverflow.com/questions/20808393/pytho
     if item[1] > max_y:
       max_y = item[1]
 
-
   return [(min_x,min_y),(max_x,min_y),(max_x,max_y),(min_x,max_y)]
 
 mbr_x = []
@@ -103,6 +86,22 @@ mbr_y = [i[1] for i in mbr_res]
 # plotter.add_point(input_x, input_y)
 # plotter.show()
 
+# METHOD mini
+def min_(a):
+    res = a[0]
+    for i in a:
+        if i < res:
+            res = i
+    return res
+
+# METHOD maxi
+def max_(a):
+    res = a[0]
+    for i in a:
+        if i > res:
+            res = i
+    return res
+#PRINT MBC Results
 mbr = []
 for i in input_points:
     if min_(poly_x) < i[0] < max_(poly_x) and min_(poly_y) < i[1] < max_(poly_y):
@@ -110,18 +109,9 @@ for i in input_points:
     else:
         mbr.append('outside')
 input_mbr = [input_x, input_y, mbr]
-
-#MATRIX CREATOR: combine mbr results with data points (from columns to rows AND rows to columns)
-def transpose_matrix(matrix):
-    res = []
-    result = [[matrix[j][i] for j in range(len(matrix))] for i in range(len(matrix[0]))] #https://www.programiz.com/python-programming/examples/transpose-matrix
-    for r in result:
-        res.append(r)
-    return res
-
 print(transpose_matrix(input_mbr))
 
-### CALCULATE LINES ###
+### CALCULATE RCA ###
 
 def edges(self):
     ''' Returns a list of tuples that each contain 2 points of an edge '''
@@ -134,54 +124,80 @@ def edges(self):
 
 polygon_sides = edges(poly_points)
 
+############################################
 
-def contains(self, point):
-    import sys
-    # _huge is used to act as infinity if we divide by 0
-    _huge = sys.float_info.max
-    # _eps is used to make sure points are not on the same line as vertexes
-    _eps = 0.00001
+class Point:
+    def __init__(self, x, y):
+        """
+        A point specified by (x,y) coordinates in the cartesian plane
+        """
+        self.x = x
+        self.y = y
 
-    # We start on the outside of the polygon
-    inside = False
-    ypoint = [i[1] for i in point]
-    xpoint = [i[0] for i in point]
-    for edge in self:
-        # Make sure A is the lower point of the edge
-        A, B = edge[0], edge[1]
-        if A[1] > B[1]:
-            A, B = B, A
 
-        # Make sure point is not at same height as vertex
-        if ypoint == A[1] or ypoint == B[1]:
-            ypointy += _eps
+class Polygon:
+    def __init__(self, points):
+        """
+        points: a list of Points in clockwise order.
+        """
+        self.points = points
 
-        if (ypoint > B[1] or ypoint < A[1] or xpoint > max(A[0], B[0])):
-            # The horizontal ray does not intersect with the edge
-            continue
+    def edges(self):
+        ''' Returns a list of tuples that each contain 2 points of an edge '''
+        edge_list = []
+        for i, p in enumerate(self.points):
+            p1 = p
+            p2 = self.points[(i + 1) % len(self.points)]
+            edge_list.append((p1, p2))
+        return edge_list
 
-        if xpoint < min(A[0], B[0]):  # The ray intersects with the edge
-            inside = not inside
-            continue
+    def contains(self, point): ##need to make method iterable ##
+        import sys
+        # _huge is used to act as infinity if we divide by 0
+        _huge = sys.float_info.max
+        # _eps is used to make sure points are not on the same line as vertexes
+        _eps = 0.00001
 
-        try:
-            m_edge = (B[1] - A[1]) / (B[0] - A[0])
-        except ZeroDivisionError:
-            m_edge = _huge
+        # We start on the outside of the polygon
+        inside = False
+        for edge in self.edges:
+            # Make sure A is the lower point of the edge
+            A, B = edge[0], edge[1]
+            if A.y > B.y:
+                A, B = B, A
 
-        try:
-            m_point = (ypoint - A[1]) / (xpoint - A[0])
-        except ZeroDivisionError:
-            m_point = _huge
+            # Make sure point is not at same height as vertex
+            if point.y == A.y or point.y == B.y:
+                point.y += _eps
 
-        if m_point >= m_edge:
-            # The ray intersects with the edge
-            inside = not inside
-            continue
+            if (point.y > B.y or point.y < A.y or point.x > max(A.x, B.x)):
+                # The horizontal ray does not intersect with the edge
+                continue
 
-    return inside
+            if point.x < min(A.x, B.x): # The ray intersects with the edge
+                inside = not inside
+                continue
 
-contains(polygon_sides, input_points)
+            try:
+                m_edge = (B.y - A.y) / (B.x - A.x)
+            except ZeroDivisionError:
+                m_edge = _huge
+
+            try:
+                m_point = (point.y - A.y) / (point.x - A.x)
+            except ZeroDivisionError:
+                m_point = _huge
+
+            if m_point >= m_edge:
+                # The ray intersects with the edge
+                inside = not inside
+                continue
+
+        return inside
+
+q = Polygon(poly_points)
+test_points = Point(input_x, input_y)
+print(str(q.contains(test_points)))
 
 
 

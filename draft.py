@@ -25,6 +25,16 @@ def transpose_matrix(matrix):
     return res
 
 
+### CALCULATE LINES FUNCTION ###
+def edges(self):
+    ''' Returns a list of tuples that each contain 2 points of an edge '''
+    edge_list = []
+    for i, p in enumerate(self):
+        p1 = p
+        p2 = self[(i + 1) % len(self)]
+        edge_list.append((p1, p2))
+    return edge_list
+
 ### LECTURE CLASS EXAMPLE ###
 class Geometry:
     def __init__(self, name):
@@ -81,7 +91,6 @@ class Polygon(Geometry):
             """
             self.points = points
 
-        @property
         def edges(self):
             ''' Returns a list of tuples that each contain 2 points of an edge '''
             edge_list = []
@@ -139,6 +148,15 @@ class Polygon(Geometry):
             if i > res:
                 res = i
         return res
+
+    mbr = []
+    for i in input_points:
+        if min_(poly_x) < i[0] < max_(poly_x) and min_(poly_y) < i[1] < max_(poly_y):
+            mbr.append('inside')
+        else:
+            mbr.append('outside')
+    input_mbr = [input_x, input_y, mbr]
+
     #METHOD get_MBR
     ##MBR box points
         def mbr_box(coords): #source: https://stackoverflow.com/questions/20808393/python-defining-a-minimum-bounding-rectangle
