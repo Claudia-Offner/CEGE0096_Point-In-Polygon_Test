@@ -64,6 +64,33 @@ class Polygon(Geometry):
         res.append(Line(point_a.get_name() + '-' + points[0].get_name(), point_a, points[0]))
         return res
 
+########################################################
+##http: // philliplemons.com / posts / ray - casting - algorithm
+    class Point:
+        def __init__(self, x, y):
+            """
+            A point specified by (x,y) coordinates in the cartesian plane
+            """
+            self.x = x
+            self.y = y
+
+    class Polygon:
+        def __init__(self, points):
+            """
+            points: a list of Points in clockwise order.
+            """
+            self.points = points
+
+        @property
+        def edges(self):
+            ''' Returns a list of tuples that each contain 2 points of an edge '''
+            edge_list = []
+            for i, p in enumerate(self.points):
+                p1 = p
+                p2 = self.points[(i + 1) % len(self.points)]
+                edge_list.append((p1, p2))
+            return edge_list
+
 ## STATISTICS CLASS ##
 
 

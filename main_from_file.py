@@ -123,17 +123,68 @@ print(transpose_matrix(input_mbr))
 
 ### CALCULATE LINES ###
 
+def edges(self):
+    ''' Returns a list of tuples that each contain 2 points of an edge '''
+    edge_list = []
+    for i, p in enumerate(self):
+        p1 = p
+        p2 = self[(i + 1) % len(self)]
+        edge_list.append((p1, p2))
+    return edge_list
+
+polygon_sides = edges(poly_points)
+
+
+def contains(self, point):
+    import sys
+    # _huge is used to act as infinity if we divide by 0
+    _huge = sys.float_info.max
+    # _eps is used to make sure points are not on the same line as vertexes
+    _eps = 0.00001
+
+    # We start on the outside of the polygon
+    inside = False
+    ypoint = [i[1] for i in point]
+    xpoint = [i[0] for i in point]
+    for edge in self:
+        # Make sure A is the lower point of the edge
+        A, B = edge[0], edge[1]
+        if A[1] > B[1]:
+            A, B = B, A
+
+        # Make sure point is not at same height as vertex
+        if ypoint == A[1] or ypoint == B[1]:
+            ypointy += _eps
+
+        if (ypoint > B[1] or ypoint < A[1] or xpoint > max(A[0], B[0])):
+            # The horizontal ray does not intersect with the edge
+            continue
+
+        if xpoint < min(A[0], B[0]):  # The ray intersects with the edge
+            inside = not inside
+            continue
+
+        try:
+            m_edge = (B[1] - A[1]) / (B[0] - A[0])
+        except ZeroDivisionError:
+            m_edge = _huge
+
+        try:
+            m_point = (ypoint - A[1]) / (xpoint - A[0])
+        except ZeroDivisionError:
+            m_point = _huge
+
+        if m_point >= m_edge:
+            # The ray intersects with the edge
+            inside = not inside
+            continue
+
+    return inside
+
+contains(polygon_sides, input_points)
 
 
 
-
-
-
-
-
-# WRITE the category_result to a CSV file
-
-# PLOT the points and polygon in a plot window
 
 def main():
     plotter = Plotter()
