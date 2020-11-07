@@ -35,21 +35,22 @@ print(input_x)
 print(input_y)
 
 plotter = Plotter()
-plotter.add_polygon(poly_x, poly_y)
-plotter.add_point(input_x, input_y)
-plotter.show()
+# plotter.add_polygon(poly_x, poly_y)
+# plotter.add_point(input_x, input_y)
+# plotter.show()
 
 # CATEGORISE input_points as inside, outside or boundary and save to category_result (list)
 
-#MBR
-#METHOD mini
+######MBR#######
+
+# mini
 def min_(a):
     res = a[0]
     for i in a:
         if i < res:
             res = i
     return res
-#METHOD maxi
+# maxi
 def max_(a):
     res = a[0]
     for i in a:
@@ -67,14 +68,67 @@ y_min_max.append(max_(poly_y))
 print(x_min_max)
 print(y_min_max)
 
-mbr = input_points
-for i in input_points:
-    if min_(poly_x) < i[0] < max_(poly_x) AND min_(poly_y) < i[1] < max_(poly_y):
-        mbr.append(True)
-    else:
-        mbr.append(False)
+##MBR box
+def mbr_box(coords): #source: https://stackoverflow.com/questions/20808393/python-defining-a-minimum-bounding-rectangle
 
-print(mbr)
+  min_x = 100000 # start with something much higher than expected min
+  min_y = 100000
+  max_x = -100000 # start with something much lower than expected max
+  max_y = -100000
+
+  for item in coords:
+    if item[0] < min_x:
+      min_x = item[0]
+
+    if item[0] > max_x:
+      max_x = item[0]
+
+    if item[1] < min_y:
+      min_y = item[1]
+
+    if item[1] > max_y:
+      max_y = item[1]
+
+
+  return [(min_x,min_y),(max_x,min_y),(max_x,max_y),(min_x,max_y)]
+
+mbr_x = []
+mbr_y = []
+mbr_res = mbr_box(poly_points)
+mbr_x = [i[0] for i in mbr_res]
+mbr_y = [i[1] for i in mbr_res]
+
+# plotter.add_polygon(poly_x, poly_y)
+# plotter.add_polygon(mbr_x, mbr_y)
+# plotter.add_point(input_x, input_y)
+# plotter.show()
+
+mbr = []
+for i in input_points:
+    if min_(poly_x) < i[0] < max_(poly_x) and min_(poly_y) < i[1] < max_(poly_y):
+        mbr.append('inside')
+    else:
+        mbr.append('outside')
+input_mbr = [input_x, input_y, mbr]
+
+#MATRIX CREATOR: combine mbr results with data points (from columns to rows AND rows to columns)
+def transpose_matrix(matrix):
+    res = []
+    result = [[matrix[j][i] for j in range(len(matrix))] for i in range(len(matrix[0]))] #https://www.programiz.com/python-programming/examples/transpose-matrix
+    for r in result:
+        res.append(r)
+    return res
+
+print(transpose_matrix(input_mbr))
+
+### CALCULATE LINES ###
+
+
+
+
+
+
+
 
 
 # WRITE the category_result to a CSV file

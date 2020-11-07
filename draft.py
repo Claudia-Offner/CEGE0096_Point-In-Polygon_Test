@@ -16,6 +16,13 @@ print(poly_x)
 print(poly_y)
 ####set main, give path a string (make it relative, not pc based) --> NEEDS FIXING
 
+#MATRIX CREATOR: combine mbr results with data points (from columns to rows AND rows to columns)
+def transpose_matrix(matrix):
+    res = []
+    result = [[matrix[j][i] for j in range(len(matrix))] for i in range(len(matrix[0]))] #https://www.programiz.com/python-programming/examples/transpose-matrix
+    for r in result:
+        res.append(r)
+    return res
 
 
 ### LECTURE CLASS EXAMPLE ###
@@ -106,11 +113,35 @@ class Polygon(Geometry):
                 res = i
         return res
     #METHOD get_MBR
-        #extract list of points inside and outside rectangle; as MBR_results
-        # IF x_min < point.x < x_max AND y_min < point.y < y.max:
-            # THEN point is inside the MBR = TRUE (but we don't know about the polygon)
-        # ELSE:
-            # THEN point is outside the MBR = FALSE
+    ##MBR box points
+        def mbr_box(coords): #source: https://stackoverflow.com/questions/20808393/python-defining-a-minimum-bounding-rectangle
+
+              min_x = 100000 # start with something much higher than expected min
+              min_y = 100000
+              max_x = -100000 # start with something much lower than expected max
+              max_y = -100000
+
+              for item in coords:
+                if item[0] < min_x:
+                  min_x = item[0]
+
+                if item[0] > max_x:
+                  max_x = item[0]
+
+                if item[1] < min_y:
+                  min_y = item[1]
+
+                if item[1] > max_y:
+                  max_y = item[1]
+
+                return [(min_x,min_y),(max_x,min_y),(max_x,max_y),(min_x,max_y)]
+    ## MBR_test
+        mbr = []
+        for i in input_points:
+            if min_(poly_x) < i[0] < max_(poly_x) and min_(poly_y) < i[1] < max_(poly_y):
+                mbr.append(True)
+            else:
+                mbr.append(False)
 
 #SUB CLASS Line_Crossing (PIP_test)
     #(for lines)
@@ -118,8 +149,16 @@ class Polygon(Geometry):
         #equation_list
     #METHOD slope
         #extract slope of lines; output to a new column in equation_list (do for both polygon_sides and input_rays)
+    def slope(self, x1, y1, x2, y2):
+        return (y2 - y1) / (x2 - x1)
     #METHOD y_int
         #extract y-int of a line list; ouput to a new column in equation_list (do for both polygon_sides and input_rays)
+    def y_int(self, x1, y1, m1): #where m1 is slope
+        return (y1 - x1*m1)
+
+
+
+
     #METHOD sorter
         #evaluate input_rays against each polygon_sides and sort them into parallel(same slope), coinciding(same slope & y-int) or intersecting
         #IF NOT coinciding OR parallel
@@ -153,6 +192,13 @@ class Polygon(Geometry):
 
 #SUB CLASS Point_on_line (RCA)
     #(for points)
+    def is_point_on_line(x, y, a, b):
+        return y == ((a * x) + b)
+
+    if is_point_on_line(x, y, a, b):
+        print('Yes')
+    else:
+        print('No')
     #METHOD get_boundary
         # Update RCA_results with boundary identification
         # FOR each input point(x3, y3) and each line (x1,y1,x2,y2):
