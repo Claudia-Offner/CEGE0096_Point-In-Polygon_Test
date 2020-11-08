@@ -235,12 +235,12 @@ class Polygon:
 
             if (point.y > B[1] or point.y < A[1] or point.x > max(A[0], B[0])):
                 # The horizontal ray does not intersect with the edge
-                intersect.append('No Intersect')
+                intersect.append('FALSE')
                 continue
 
             if point.x < min(A[0], B[0]): # The ray intersects with the edge
                 inside = not inside
-                intersect.append('Intersect')
+                intersect.append('TRUE')
                 continue
 
             try:
@@ -256,19 +256,32 @@ class Polygon:
             if m_point >= m_edge:
                 # The ray intersects with the edge
                 inside = not inside
-                intersect.append('Intersect')
+                intersect.append('TRUE')
                 continue
 
         return intersect
-
-
 
 q = Polygon(poly_points)
 poly_edges = q.edges()
 print(poly_edges)
 
+#check if a single point is within in the polygon
 p1 = Point(-0.5,5)
-print(str(q.contains(p1)))
+a = str(q.contains(p1))
+print(a)
+
+#count intersections & determine if inside/outside polygon
+count = a.count('TRUE')
+if (count % 2) == 0:
+   print("This point is outside".format(count))
+else:
+   print("This point is inside".format(count))
+
+#add point
+plotter.add_polygon(poly_x, poly_y)
+plotter.add_point(input_x, input_y)
+plotter.add_point(-0.5, 5, 'outside')
+plotter.show()
 
 #print(str(q.contains(test_points)))
 
