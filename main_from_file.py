@@ -141,7 +141,6 @@ class Polygon:
         _huge = sys.float_info.max # _huge is used to act as infinity if we divide by 0
         _eps = 0.00001  # _eps is used to make sure points are not on the same line as vertexes
         intersect = []
-        inside = False # We start on the outside of the polygon
         for edge in self.edges():
             # A is the lower point of the edge
             A, B = edge[0], edge[1]
@@ -159,7 +158,6 @@ class Polygon:
                 continue
 
             if X < min(A[0], B[0]): # The ray intersects with the edge
-                inside = not inside
                 intersect.append('TRUE')
                 continue
 
@@ -175,12 +173,15 @@ class Polygon:
 
             if m_point >= m_edge:
                 # The ray intersects with the edge
-                inside = not inside
                 intersect.append('TRUE')
                 continue
 
+            if Y == ((X - A[0])/(B[0 - A[0]])) * (B[1] - A[1]) + A[1]: #first part of boundary identifier
+
+
         return intersect
 
+    #def boundary(self, point):
 
 #check if a list of points is within in the polygon
 q = Polygon(poly_points)
@@ -189,7 +190,6 @@ print(a)
 
 #count intersections & determine if inside/outside polygon
 count = [i.count('TRUE') for i in a]
-print(count)
 lb = []
 for num in count:
     if (num % 2) == 0:
@@ -197,7 +197,6 @@ for num in count:
         lb.append('outside')
     else:
         lb.append('inside')
-
 print(lb)
 
 # Plot points
