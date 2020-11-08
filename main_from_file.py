@@ -106,7 +106,6 @@ print(boxy)
 # plotter.show()
 
 
-
 ################# RCA CLASS ###########################
 
 class Point:
@@ -146,19 +145,20 @@ class Polygon:
         for edge in self.edges():
             # A is the lower point of the edge
             A, B = edge[0], edge[1]
+            X, Y = point[0], point[1]
             if A[1] > B[1]:
                 A, B = B, A
 
             # Point is not at same height as vertex
-            if point.y == A[1] or point.y == B[1]:
-                point.y += _eps
+            if Y == A[1] or Y == B[1]:
+                Y += _eps
 
-            if (point.y > B[1] or point.y < A[1] or point.x > max(A[0], B[0])):
+            if (Y > B[1] or Y < A[1] or X > max(A[0], B[0])):
                 # The horizontal ray does not intersect with the edge
                 intersect.append('FALSE')
                 continue
 
-            if point.x < min(A[0], B[0]): # The ray intersects with the edge
+            if X < min(A[0], B[0]): # The ray intersects with the edge
                 inside = not inside
                 intersect.append('TRUE')
                 continue
@@ -169,7 +169,7 @@ class Polygon:
                 m_edge = _huge
 
             try:
-                m_point = (point.y - A[1]) / (point.x - A[0])
+                m_point = (Y- A[1]) / (X - A[0])
             except ZeroDivisionError:
                 m_point = _huge
 
@@ -182,14 +182,12 @@ class Polygon:
         return intersect
 
 q = Polygon(poly_points)
-input = Point(input_x, input_x)
-poly_edges = q.edges()
-print(poly_edges)
 
 #check if a single point is within in the polygon
 p1 = Point(-0.5,5)
-a = [q.contains(p) for p in input]
+a = [q.contains(p) for p in input_points]
 print(a)
+print(a.count('FALSE'))
 
 # #count intersections & determine if inside/outside polygon
 # count = a.count('TRUE')
