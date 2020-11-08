@@ -225,7 +225,7 @@ class Polygon(Geometry):
  #SUB CLASS RCA (PIP_test)
     #(for lines)
     #METHOD get_rca
-        #Extract analysis; output to RCA_results
+        #Extract intersection; output to RCA_results
         #SET counting to 0
         #FOR each line of polygon:
             #IF ray crosses the line = TRUE:

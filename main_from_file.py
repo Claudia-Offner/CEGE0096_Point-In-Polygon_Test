@@ -101,6 +101,7 @@ def max_(a):
         if i > res:
             res = i
     return res
+
 #PRINT MBC Results
 mbr = []
 for i in input_points:
@@ -112,19 +113,81 @@ input_mbr = [input_x, input_y, mbr]
 print(transpose_matrix(input_mbr))
 
 ### CALCULATE RCA ###
+# Find edges of the polygon
+# def edges(self):
+#     ''' Returns a list of tuples that each contain 2 points of an edge '''
+#     edge_list = []
+#     for i, p in enumerate(self):
+#         p1 = p
+#         p2 = self[(i + 1) % len(self)]
+#         edge_list.append((p1, p2))
+#     return edge_list
+#
+# poly_edge = edges(poly_points)
 
-def edges(self):
-    ''' Returns a list of tuples that each contain 2 points of an edge '''
-    edge_list = []
-    for i, p in enumerate(self):
-        p1 = p
-        p2 = self[(i + 1) % len(self)]
-        edge_list.append((p1, p2))
-    return edge_list
+#find ray intersections
+# from collections import namedtuple
+# import sys
+#
+# Pt = namedtuple('Pt', 'x, y')  # Point
+# Edge = namedtuple('Edge', 'a, b')  # Polygon edge from a to b
+# Poly = namedtuple('Poly', 'name, edges')
+#
+# _eps = 0.00001
+# _huge = sys.float_info.max
+# _tiny = sys.float_info.min
+#
+# def rayintersectseg(p, edge):
+#     ''' takes a point p=Pt() and an edge of two endpoints a,b=Pt() of a line segment returns boolean
+#     '''
+#     py, px = p[0], p[1]
+#
+#     intersect = False
+#     for i in edge:
+#         a, b = i[0], i[1]
+#         ay, ax, bx, by = a[0], a[1], b[0], b[1]
+#         #Make sure A is the lower point of the edge
+#         if ay > by:
+#             a, b = b, a
+#         #Make sure point is not at the same height as the vertex
+#         if py == ay or py == by:
+#             py += _eps
+#
+#         if py > by or py < ay or px > max(ax, bx):
+#             return False # The horizontal ray does not intersect with the edge
+#
+#         if px < min(ax, bx):
+#             intersect = True # The ray intersects with the edge
+#
+#         else:
+#             if abs(ax - bx) > _tiny:
+#                 m_red = (by - ay) / float(bx - ax)
+#             else:
+#                 m_red = _huge
+#             if abs(ax - px) > _tiny:
+#                 m_blue = (py - ay) / float(px - ax)
+#             else:
+#                 m_blue = _huge
+#             if m_blue >= m_red:
+#                 intersect = True # The ray intersects with the edge
+#
+#         return intersect
+#
+# def _odd(x): return x % 2 == 1
+#
+# def ispointinside(p, poly):
+#     return _odd(sum(rayintersectseg(p, edge) for edge in poly))
+#
+# for i in input_points:
+#     print(rayintersectseg(input_points, poly_edge))
 
-polygon_sides = edges(poly_points)
 
-############################################
+
+
+
+
+
+################# CLASSES ###########################
 
 class Point:
     def __init__(self, x, y):
@@ -134,6 +197,9 @@ class Point:
         self.x = x
         self.y = y
 
+    def __iter__(self):
+        for each in self.__dict__.keys():
+            yield self.__getattribute__(each)
 
 class Polygon:
     def __init__(self, points):
@@ -153,70 +219,75 @@ class Polygon:
 
     def contains(self, point): ##need to make method iterable ##
         import sys
-        # _huge is used to act as infinity if we divide by 0
-        _huge = sys.float_info.max
-        # _eps is used to make sure points are not on the same line as vertexes
-        _eps = 0.00001
-
-        # We start on the outside of the polygon
-        inside = False
-        for edge in self.edges:
-            # Make sure A is the lower point of the edge
+        _huge = sys.float_info.max # _huge is used to act as infinity if we divide by 0
+        _eps = 0.00001  # _eps is used to make sure points are not on the same line as vertexes
+        intersect = []
+        inside = False # We start on the outside of the polygon
+        for edge in self.edges():
+            # A is the lower point of the edge
             A, B = edge[0], edge[1]
-            if A.y > B.y:
+            if A[1] > B[1]:
                 A, B = B, A
 
-            # Make sure point is not at same height as vertex
-            if point.y == A.y or point.y == B.y:
+            # Point is not at same height as vertex
+            if point.y == A[1] or point.y == B[1]:
                 point.y += _eps
 
-            if (point.y > B.y or point.y < A.y or point.x > max(A.x, B.x)):
+            if (point.y > B[1] or point.y < A[1] or point.x > max(A[0], B[0])):
                 # The horizontal ray does not intersect with the edge
+                intersect.append('No Intersect')
                 continue
 
-            if point.x < min(A.x, B.x): # The ray intersects with the edge
+            if point.x < min(A[0], B[0]): # The ray intersects with the edge
                 inside = not inside
+                intersect.append('Intersect')
                 continue
 
             try:
-                m_edge = (B.y - A.y) / (B.x - A.x)
+                m_edge = (B[1] - A[1]) / (B[0] - A[0])
             except ZeroDivisionError:
                 m_edge = _huge
 
             try:
-                m_point = (point.y - A.y) / (point.x - A.x)
+                m_point = (point.y - A[1]) / (point.x - A[0])
             except ZeroDivisionError:
                 m_point = _huge
 
             if m_point >= m_edge:
                 # The ray intersects with the edge
                 inside = not inside
+                intersect.append('Intersect')
                 continue
 
-        return inside
+        return intersect
+
+
 
 q = Polygon(poly_points)
-test_points = Point(input_x, input_y)
-print(str(q.contains(test_points)))
+poly_edges = q.edges()
+print(poly_edges)
+
+p1 = Point(-0.5,5)
+print(str(q.contains(p1)))
+
+#print(str(q.contains(test_points)))
 
 
 
-
-def main():
-    plotter = Plotter()
-    print("read polygon.csv")
-
-    print("read input.csv")
-
-    print("categorize points")
-
-    print("write output.csv")
-
-    print("plot polygon and points")
-    #plotter.show()
-
-##Put your solution here ^^^
-
-if __name__ == "__main__":
-    main()
-
+# def main():
+#     plotter = Plotter()
+#     print("read polygon.csv")
+#
+#     print("read input.csv")
+#
+#     print("categorize points")
+#
+#     print("write output.csv")
+#
+#     print("plot polygon and points")
+#     #plotter.show()
+#
+# ##Put your solution here ^^^
+#
+# if __name__ == "__main__":
+#     main()
