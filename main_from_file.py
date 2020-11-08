@@ -181,26 +181,30 @@ class Polygon:
 
         return intersect
 
-q = Polygon(poly_points)
 
-#check if a single point is within in the polygon
-p1 = Point(-0.5,5)
+#check if a list of points is within in the polygon
+q = Polygon(poly_points)
 a = [q.contains(p) for p in input_points]
 print(a)
-print(a.count('FALSE'))
 
-# #count intersections & determine if inside/outside polygon
-# count = a.count('TRUE')
-# if (count % 2) == 0:
-#    print("This point is outside".format(count))
-# else:
-#    print("This point is inside".format(count))
-#
-# #add point
-# plotter.add_polygon(poly_x, poly_y)
-# plotter.add_point(input_x, input_y)
-# plotter.add_point(-0.5, 5, 'outside')
-# plotter.show()
+#count intersections & determine if inside/outside polygon
+count = [i.count('TRUE') for i in a]
+print(count)
+lb = []
+for num in count:
+    if (num % 2) == 0:
+        print()
+        lb.append('outside')
+    else:
+        lb.append('inside')
+
+print(lb)
+
+# Plot points
+plotter.add_polygon(poly_x, poly_y)
+for x, y, label in zip(input_x,input_y,lb):
+    plotter.add_point(x, y, kind = label)
+plotter.show()
 
 
 
