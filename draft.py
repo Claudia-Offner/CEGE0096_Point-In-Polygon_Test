@@ -132,63 +132,57 @@ class Polygon(Geometry):
         #lists used as lines
 
 #SUB CLASS MBR (PIP_Test)
-    #(for points)
-    # METHOD mini
-    def min_(a):
-        res = a[0]
-        for i in a:
-            if i < res:
-                res = i
-        return res
 
-    # METHOD maxi
-    def max_(a):
-        res = a[0]
-        for i in a:
-            if i > res:
-                res = i
-        return res
+        def min_(a):
+            res = a[0]
+            for i in a:
+                if i < res:
+                    res = i
+            return res
 
-    mbr = []
-    for i in input_points:
-        if min_(poly_x) < i[0] < max_(poly_x) and min_(poly_y) < i[1] < max_(poly_y):
-            mbr.append('inside')
-        else:
-            mbr.append('outside')
-    input_mbr = [input_x, input_y, mbr]
+        # max
+        def max_(a):
+            res = a[0]
+            for i in a:
+                if i > res:
+                    res = i
+            return res
 
-    #METHOD get_MBR
-    ##MBR box points
-        def mbr_box(coords): #source: https://stackoverflow.com/questions/20808393/python-defining-a-minimum-bounding-rectangle
+        # mbr
+        def get_mbr(points, poly_x, poly_y):
+            mbr = []
+            for i in points:
+                if min_(poly_x) < i[0] < max_(poly_x) and min_(poly_y) < i[1] < max_(poly_y):
+                    mbr.append("inside")
+                else:
+                    mbr.append("outside")
+            return mbr
 
-              min_x = 100000 # start with something much higher than expected min
-              min_y = 100000
-              max_x = -100000 # start with something much lower than expected max
-              max_y = -100000
+        ##MBR box_coords
+        def mbr_box(
+                coords):  # source: https://stackoverflow.com/questions/20808393/python-defining-a-minimum-bounding-rectangle
 
-              for item in coords:
+            min_x = 100000  # start with something much higher than expected min
+            min_y = 100000
+            max_x = -100000  # start with something much lower than expected max
+            max_y = -100000
+
+            for item in coords:
                 if item[0] < min_x:
-                  min_x = item[0]
+                    min_x = item[0]
 
                 if item[0] > max_x:
-                  max_x = item[0]
+                    max_x = item[0]
 
                 if item[1] < min_y:
-                  min_y = item[1]
+                    min_y = item[1]
 
                 if item[1] > max_y:
-                  max_y = item[1]
+                    max_y = item[1]
 
-                return [(min_x,min_y),(max_x,min_y),(max_x,max_y),(min_x,max_y)]
-    ## MBR_test
-        mbr = []
-        for i in input_points:
-            if min_(poly_x) < i[0] < max_(poly_x) and min_(poly_y) < i[1] < max_(poly_y):
-                mbr.append(True)
-            else:
-                mbr.append(False)
+            return [(min_x, min_y), (max_x, min_y), (max_x, max_y), (min_x, max_y)]
 
-#SUB CLASS Line_Crossing (PIP_test)
+    #SUB CLASS Line_Crossing (PIP_test)
     #(for lines)
     #METHOD self
         #equation_list

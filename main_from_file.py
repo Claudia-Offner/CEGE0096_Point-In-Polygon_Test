@@ -49,145 +49,65 @@ def transpose_matrix(matrix):
 
 # CATEGORISE input_points as inside, outside or boundary and save to category_result (list)
 
-######MBR#######
+###### MBR CLASS #######
+
+class MBR:
+
+    def __init__(self, polygon):
+        self.polygon = polygon
+
+    def basic_mbr(self):  # source: https://stackoverflow.com/questions/20808393/python-defining-a-minimum-bounding-rectangle
+
+        min_x = 100000  # start with something much higher than expected min
+        min_y = 100000
+        max_x = -100000  # start with something much lower than expected max
+        max_y = -100000
+
+        for item in self.polygon:
+            if item[0] < min_x:
+                min_x = item[0]
+
+            if item[0] > max_x:
+                max_x = item[0]
+
+            if item[1] < min_y:
+                min_y = item[1]
+
+            if item[1] > max_y:
+                max_y = item[1]
+
+        return [min_x, min_y, max_x, max_y] # return [(min_x, min_y), (max_x, min_y), (max_x, max_y), (min_x, max_y)] if you want the coords
+
+    def get_mbr(self, points):
+        mbr = []
+        a = self.basic_mbr()
+        min_x, min_y, max_x, max_y = a[0], a[1], a[2], a[3]
+        for i in points:
+            if min_x < i[0] < max_x and min_y < i[1] < max_y:
+                mbr.append("inside")
+            else:
+                mbr.append("outside")
+        return mbr
+
+    def mbr_box(self):
+        b = self.basic_mbr()
+        min_x, min_y, max_x, max_y = b[0], b[1], b[2], b[3]
+        return [(min_x, min_y), (max_x, min_y), (max_x, max_y), (min_x, max_y)]
 
 
-##MBR box_coords
-def mbr_box(coords): #source: https://stackoverflow.com/questions/20808393/python-defining-a-minimum-bounding-rectangle
-
-  min_x = 100000 # start with something much higher than expected min
-  min_y = 100000
-  max_x = -100000 # start with something much lower than expected max
-  max_y = -100000
-
-  for item in coords:
-    if item[0] < min_x:
-      min_x = item[0]
-
-    if item[0] > max_x:
-      max_x = item[0]
-
-    if item[1] < min_y:
-      min_y = item[1]
-
-    if item[1] > max_y:
-      max_y = item[1]
-
-  return [(min_x,min_y),(max_x,min_y),(max_x,max_y),(min_x,max_y)]
-
-mbr_x = []
-mbr_y = []
-mbr_res = mbr_box(poly_points)
-mbr_x = [i[0] for i in mbr_res]
-mbr_y = [i[1] for i in mbr_res]
-
+p = MBR(poly_points)
+label_mbr = p.get_mbr(input_points)
+boxy = transpose_matrix(p.mbr_box())
+print(boxy)
 # plotter.add_polygon(poly_x, poly_y)
-# plotter.add_polygon(mbr_x, mbr_y)
-# plotter.add_point(input_x, input_y)
+# plotter.add_polygon(boxy[0], boxy[1])
+# for x, y, label in zip(input_x,input_y,label_mbr):
+#     plotter.add_point(x, y, kind = label)
 # plotter.show()
 
-# METHOD mini
-def min_(a):
-    res = a[0]
-    for i in a:
-        if i < res:
-            res = i
-    return res
-
-# METHOD maxi
-def max_(a):
-    res = a[0]
-    for i in a:
-        if i > res:
-            res = i
-    return res
-
-#PRINT MBC Results
-mbr = []
-for i in input_points:
-    if min_(poly_x) < i[0] < max_(poly_x) and min_(poly_y) < i[1] < max_(poly_y):
-        mbr.append('inside')
-    else:
-        mbr.append('outside')
-input_mbr = [input_x, input_y, mbr]
-print(transpose_matrix(input_mbr))
-
-### CALCULATE RCA ###
-# Find edges of the polygon
-# def edges(self):
-#     ''' Returns a list of tuples that each contain 2 points of an edge '''
-#     edge_list = []
-#     for i, p in enumerate(self):
-#         p1 = p
-#         p2 = self[(i + 1) % len(self)]
-#         edge_list.append((p1, p2))
-#     return edge_list
-#
-# poly_edge = edges(poly_points)
-
-#find ray intersections
-# from collections import namedtuple
-# import sys
-#
-# Pt = namedtuple('Pt', 'x, y')  # Point
-# Edge = namedtuple('Edge', 'a, b')  # Polygon edge from a to b
-# Poly = namedtuple('Poly', 'name, edges')
-#
-# _eps = 0.00001
-# _huge = sys.float_info.max
-# _tiny = sys.float_info.min
-#
-# def rayintersectseg(p, edge):
-#     ''' takes a point p=Pt() and an edge of two endpoints a,b=Pt() of a line segment returns boolean
-#     '''
-#     py, px = p[0], p[1]
-#
-#     intersect = False
-#     for i in edge:
-#         a, b = i[0], i[1]
-#         ay, ax, bx, by = a[0], a[1], b[0], b[1]
-#         #Make sure A is the lower point of the edge
-#         if ay > by:
-#             a, b = b, a
-#         #Make sure point is not at the same height as the vertex
-#         if py == ay or py == by:
-#             py += _eps
-#
-#         if py > by or py < ay or px > max(ax, bx):
-#             return False # The horizontal ray does not intersect with the edge
-#
-#         if px < min(ax, bx):
-#             intersect = True # The ray intersects with the edge
-#
-#         else:
-#             if abs(ax - bx) > _tiny:
-#                 m_red = (by - ay) / float(bx - ax)
-#             else:
-#                 m_red = _huge
-#             if abs(ax - px) > _tiny:
-#                 m_blue = (py - ay) / float(px - ax)
-#             else:
-#                 m_blue = _huge
-#             if m_blue >= m_red:
-#                 intersect = True # The ray intersects with the edge
-#
-#         return intersect
-#
-# def _odd(x): return x % 2 == 1
-#
-# def ispointinside(p, poly):
-#     return _odd(sum(rayintersectseg(p, edge) for edge in poly))
-#
-# for i in input_points:
-#     print(rayintersectseg(input_points, poly_edge))
 
 
-
-
-
-
-
-################# CLASSES ###########################
+################# RCA CLASS ###########################
 
 class Point:
     def __init__(self, x, y):
@@ -262,28 +182,27 @@ class Polygon:
         return intersect
 
 q = Polygon(poly_points)
+input = Point(input_x, input_x)
 poly_edges = q.edges()
 print(poly_edges)
 
 #check if a single point is within in the polygon
 p1 = Point(-0.5,5)
-a = str(q.contains(p1))
+a = [q.contains(p) for p in input]
 print(a)
 
-#count intersections & determine if inside/outside polygon
-count = a.count('TRUE')
-if (count % 2) == 0:
-   print("This point is outside".format(count))
-else:
-   print("This point is inside".format(count))
-
-#add point
-plotter.add_polygon(poly_x, poly_y)
-plotter.add_point(input_x, input_y)
-plotter.add_point(-0.5, 5, 'outside')
-plotter.show()
-
-#print(str(q.contains(test_points)))
+# #count intersections & determine if inside/outside polygon
+# count = a.count('TRUE')
+# if (count % 2) == 0:
+#    print("This point is outside".format(count))
+# else:
+#    print("This point is inside".format(count))
+#
+# #add point
+# plotter.add_polygon(poly_x, poly_y)
+# plotter.add_point(input_x, input_y)
+# plotter.add_point(-0.5, 5, 'outside')
+# plotter.show()
 
 
 
