@@ -138,24 +138,31 @@ class Polygon:
 
         return intersect
 
-    def bound(self, point):
-        epsilon = sys.float_info.epsilon
-        bound = []
-        for edge in self.edges():
+    def boundary(edges, point):
+        _eps = 0.00001  # _eps is used to make sure points are not on the same line as vertexes
+        boundary = False
+        for edge in edges():
+            # A is the lower point of the edge
             A, B = edge[0], edge[1]
             X, Y = point[0], point[1]
-            try:
-                if Y == ((X - A[0]) / (B[0] - A[0])) * (B[1] - A[1]) + A[1] and Square.get_mbr(self.points, point) == 'inside':
-                    bound.append('TRUE')
-                if X == A[0] or X == B[0] and Square.get_mbr(self.points, point) == 'inside':
-                    bound.append('TRUE')
-                else:
-                    bound.append('FALSE')
-            except ZeroDivisionError:
+
+            crossproduct = (Y - A[1]) * (X - A[0]) - (X - A[0]) * (Y - A[1])
+
+            # compare versus epsilon for floating point values, or != 0 if using integers
+            if abs(crossproduct) > _eps:
                 continue
 
-        return bound
+            dotproduct = (X - A[0]) * (B[0] - A[0]) + (Y - A[1]) * (B[1] - A[1])
+            if dotproduct < 0:
+                continue
 
+            squaredlengthba = (B[0] - A[0]) * (B[0] - A[0]) + (B[1] - A[1]) * (B[1] - A[1])
+            if dotproduct > squaredlengthba:
+                continue
+
+            boundary = True
+
+        return boundary
 
 class Square(Polygon): ## MBR CLASS ##
 
@@ -203,29 +210,33 @@ class Square(Polygon): ## MBR CLASS ##
 #check if a list of points is within in the polygon
 q = Polygon(poly_points)
 a = [q.contains(p) for p in input_points]
-b = [q.bound(p) for p in input_points]
+b = [q.edges(p) for p in input_points]
+c = []
 
 # b = [q.boundary(p) for p in input_points]
+
+
+# for point in input_points:
+#     if q.boundary[point] is True:
+#         c.append(point)
+
 print(a)
 print(b)
-print(len(b))
-
-
-
+print(c)
 #count intersections & determine if inside/outside/boundary polygon
-count = ([i.count('TRUE') for i in a], [i.count('FALSE') for i in a], [i.count('TRUE') for i in b])
-count_2 = transpose_matrix(count)
-print(count_2)
-lb = []
-for i in count_2:
-    if i[2] == 0:
-        if (i[0] % 2) == 0:
-            lb.append('outside')
-        else:
-            lb.append('inside')
-    else:
-        lb.append('boundary')
-print(lb)
+# count = ([i.count('TRUE') for i in a], [i.count('FALSE') for i in a], [i.count(True) for i in b])
+# count_2 = transpose_matrix(count)
+# print(count_2)
+# lb = []
+# for i in count_2:
+#     if i[2] == 0:
+#         if (i[0] % 2) == 0:
+#             lb.append('outside')
+#         else:
+#             lb.append('inside')
+#     else:
+#         lb.append('boundary')
+# print(lb)
 
 # Plot points
 plotter.add_polygon(poly_x, poly_y)
