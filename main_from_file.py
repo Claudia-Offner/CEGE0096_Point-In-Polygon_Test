@@ -2,6 +2,12 @@ from plotter import Plotter
 
 ##Import code from FUNCTION/CLASS file here
 
+#sources
+## https://rosettacode.org/wiki/Ray-casting_algorithm#Python
+## http://philliplemons.com/posts/ray-casting-algorithm
+## https://excalibur.apache.org/framework/best-practices.html
+
+
 ## READ list of x,y coordinates from POLGYON.CSV as poly_points (list)
 
 with open('polygon.csv', 'r') as f:
@@ -107,7 +113,7 @@ print(boxy)
 
 
 ################# RCA CLASS ###########################
-
+## http://philliplemons.com/posts/ray-casting-algorithm
 class Point:
     def __init__(self, x, y):
         """
@@ -147,20 +153,19 @@ class Polygon:
             X, Y = point[0], point[1]
             if A[1] > B[1]:
                 A, B = B, A
-
             # Point is not at same height as vertex
             if Y == A[1] or Y == B[1]:
                 Y += _eps
 
+            # The ray does not NOT intersect with the edge
             if (Y > B[1] or Y < A[1] or X > max(A[0], B[0])):
-                # The horizontal ray does not intersect with the edge
                 intersect.append('FALSE')
                 continue
-
-            if X < min(A[0], B[0]): # The ray intersects with the edge
+            # The ray intersects with the edge
+            if X < min(A[0], B[0]):
                 intersect.append('TRUE')
                 continue
-
+            #Get slope of line
             try:
                 m_edge = (B[1] - A[1]) / (B[0] - A[0])
             except ZeroDivisionError:
@@ -176,34 +181,59 @@ class Polygon:
                 intersect.append('TRUE')
                 continue
 
-            if Y == ((X - A[0])/(B[0 - A[0]])) * (B[1] - A[1]) + A[1]: #first part of boundary identifier
+            # try:
+            #     p_y = (X - A[0]) / (B[0] - A[0]) * (B[1] - A[1]) + A[1]  # first part of boundary identifier
+            # except ZeroDivisionError:
+            #     p_x = _huge
 
+            if Y == (X - A[0]) / (B[0] - A[0]) * (B[1] - A[1]) + A[1] or X == A[0] or X == B[0]:
+                intersect.append('bound')
+
+            # c = A[1] - A[0]* m_edge
+            # if Y == (m_edge * X) + c:
+            #     intersect.append('bound')
 
         return intersect
 
-    #def boundary(self, point):
 
 #check if a list of points is within in the polygon
 q = Polygon(poly_points)
 a = [q.contains(p) for p in input_points]
+# b = [q.boundary(p) for p in input_points]
 print(a)
+# print(b)
 
-#count intersections & determine if inside/outside polygon
-count = [i.count('TRUE') for i in a]
+#count intersections & determine if inside/outside/boundary polygon
+count = ([i.count('TRUE') for i in a], [i.count('FALSE') for i in a], [i.count('bound') for i in a])
+count_2 = transpose_matrix(count)
+print(count_2)
 lb = []
-for num in count:
-    if (num % 2) == 0:
-        print()
-        lb.append('outside')
+for i in count_2:
+    if i[2] == 0:
+        if (i[0] % 2) == 0:
+            lb.append('outside')
+        else:
+            lb.append('inside')
     else:
-        lb.append('inside')
+        lb.append('boundary')
 print(lb)
 
+
+# lb = []
+# for num in count:
+#     if (num % 2) == 0:
+#         print()
+#         lb.append('outside')
+#     else:
+#         lb.append('inside')
+# print(lb)
+#
 # Plot points
 plotter.add_polygon(poly_x, poly_y)
 for x, y, label in zip(input_x,input_y,lb):
     plotter.add_point(x, y, kind = label)
 plotter.show()
+
 
 
 
