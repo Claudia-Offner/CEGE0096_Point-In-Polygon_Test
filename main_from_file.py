@@ -1,4 +1,5 @@
 from plotter import Plotter
+import sys
 
 ##Import code from FUNCTION/CLASS file here
 
@@ -9,6 +10,23 @@ from plotter import Plotter
 
 
 ## READ list of x,y coordinates from POLGYON.CSV as poly_points (list)
+
+# def coord_reader(path):
+#     with open(path,'r') as f:
+#         data = f.readlines()[1:]  # skip header
+#         points = []
+#         for line in data:
+#             res = line.rstrip().split(',')[1:]  # split by line
+#             res = [float(i) for i in res]  # convert to integers
+#             points.append(res)
+#MATRIX CREATOR: combine mbr results with data points (from columns to rows AND rows to columns)
+def transpose_matrix(matrix):
+    res = []
+    result = [[matrix[j][i] for j in range(len(matrix))] for i in range(len(matrix[0]))] #https://www.programiz.com/python-programming/examples/transpose-matrix
+    for r in result:
+        res.append(r)
+    return res
+
 
 with open('polygon.csv', 'r') as f:
     data = f.readlines()[1:] #skip header
@@ -45,22 +63,104 @@ plotter = Plotter()
 # plotter.add_point(input_x, input_y)
 # plotter.show()
 
-#MATRIX CREATOR: combine mbr results with data points (from columns to rows AND rows to columns)
-def transpose_matrix(matrix):
-    res = []
-    result = [[matrix[j][i] for j in range(len(matrix))] for i in range(len(matrix[0]))] #https://www.programiz.com/python-programming/examples/transpose-matrix
-    for r in result:
-        res.append(r)
-    return res
+
 
 # CATEGORISE input_points as inside, outside or boundary and save to category_result (list)
 
-###### MBR CLASS #######
 
-class MBR:
+#################  CLASS ###########################
+## http://philliplemons.com/posts/ray-casting-algorithm
+class Point:
+    def __init__(self, x, y):
+        """
+        A point specified by (x,y) coordinates in the cartesian plane
+        """
+        self.x = x
+        self.y = y
 
-    def __init__(self, polygon):
-        self.polygon = polygon
+    def __iter__(self):
+        for each in self.__dict__.keys():
+            yield self.__getattribute__(each)
+
+class Polygon:
+    def __init__(self, points):
+        """
+        points: a list of Points in clockwise order.
+        """
+        self.points = points
+
+    def edges(self):
+        ''' Returns a list of tuples that each contain 2 points of an edge '''
+        edge_list = []
+        for i, p in enumerate(self.points):
+            p1 = p
+            p2 = self.points[(i + 1) % len(self.points)]
+            edge_list.append((p1, p2))
+        return edge_list
+
+    def contains(self, point): ### RCA ALGORITHM ###
+        _huge = sys.float_info.max # _huge is used to act as infinity if we divide by 0
+        _eps = 0.00001  # _eps is used to make sure points are not on the same line as vertexes
+        intersect = []
+        for edge in self.edges():
+            # A is the lower point of the edge
+            A, B = edge[0], edge[1]
+            X, Y = point[0], point[1]
+            if A[1] > B[1]:
+                A, B = B, A
+            # Point is not at same height as vertex
+            if Y == A[1] or Y == B[1]:
+                Y += _eps
+
+            # The ray does not NOT intersect with the edge
+            if (Y > B[1] or Y < A[1] or X > max(A[0], B[0])):
+                intersect.append('FALSE')
+                continue
+            # The ray intersects with the edge
+            if X < min(A[0], B[0]):
+                intersect.append('TRUE')
+                continue
+            #Get slope of line
+            try:
+                m_edge = (B[1] - A[1]) / (B[0] - A[0])
+            except ZeroDivisionError:
+                m_edge = _huge
+            #Get slope of point
+            try:
+                m_point = (Y- A[1]) / (X - A[0])
+            except ZeroDivisionError:
+                m_point = _huge
+
+            if m_point >= m_edge:
+                # The ray intersects with the edge
+                intersect.append('TRUE')
+                continue
+
+        return intersect
+
+    def bound(self, point):
+        epsilon = sys.float_info.epsilon
+        bound = []
+        for edge in self.edges():
+            A, B = edge[0], edge[1]
+            X, Y = point[0], point[1]
+            try:
+                if Y == ((X - A[0]) / (B[0] - A[0])) * (B[1] - A[1]) + A[1] and Square.get_mbr(self.points, point) == 'inside':
+                    bound.append('TRUE')
+                if X == A[0] or X == B[0] and Square.get_mbr(self.points, point) == 'inside':
+                    bound.append('TRUE')
+                else:
+                    bound.append('FALSE')
+            except ZeroDivisionError:
+                continue
+
+        return bound
+
+
+class Square(Polygon): ## MBR CLASS ##
+
+    def __init__(self, points):
+        super().__init__(points)
 
     def basic_mbr(self):  # source: https://stackoverflow.com/questions/20808393/python-defining-a-minimum-bounding-rectangle
 
@@ -69,7 +169,7 @@ class MBR:
         max_x = -100000  # start with something much lower than expected max
         max_y = -100000
 
-        for item in self.polygon:
+        for item in self.points:
             if item[0] < min_x:
                 min_x = item[0]
 
@@ -100,111 +200,20 @@ class MBR:
         min_x, min_y, max_x, max_y = b[0], b[1], b[2], b[3]
         return [(min_x, min_y), (max_x, min_y), (max_x, max_y), (min_x, max_y)]
 
-
-p = MBR(poly_points)
-label_mbr = p.get_mbr(input_points)
-boxy = transpose_matrix(p.mbr_box())
-print(boxy)
-# plotter.add_polygon(poly_x, poly_y)
-# plotter.add_polygon(boxy[0], boxy[1])
-# for x, y, label in zip(input_x,input_y,label_mbr):
-#     plotter.add_point(x, y, kind = label)
-# plotter.show()
-
-
-################# RCA CLASS ###########################
-## http://philliplemons.com/posts/ray-casting-algorithm
-class Point:
-    def __init__(self, x, y):
-        """
-        A point specified by (x,y) coordinates in the cartesian plane
-        """
-        self.x = x
-        self.y = y
-
-    def __iter__(self):
-        for each in self.__dict__.keys():
-            yield self.__getattribute__(each)
-
-class Polygon:
-    def __init__(self, points):
-        """
-        points: a list of Points in clockwise order.
-        """
-        self.points = points
-
-    def edges(self):
-        ''' Returns a list of tuples that each contain 2 points of an edge '''
-        edge_list = []
-        for i, p in enumerate(self.points):
-            p1 = p
-            p2 = self.points[(i + 1) % len(self.points)]
-            edge_list.append((p1, p2))
-        return edge_list
-
-    def contains(self, point): ##need to make method iterable ##
-        import sys
-        _huge = sys.float_info.max # _huge is used to act as infinity if we divide by 0
-        _eps = 0.00001  # _eps is used to make sure points are not on the same line as vertexes
-        intersect = []
-        for edge in self.edges():
-            # A is the lower point of the edge
-            A, B = edge[0], edge[1]
-            X, Y = point[0], point[1]
-            if A[1] > B[1]:
-                A, B = B, A
-            # Point is not at same height as vertex
-            if Y == A[1] or Y == B[1]:
-                Y += _eps
-
-            # The ray does not NOT intersect with the edge
-            if (Y > B[1] or Y < A[1] or X > max(A[0], B[0])):
-                intersect.append('FALSE')
-                continue
-            # The ray intersects with the edge
-            if X < min(A[0], B[0]):
-                intersect.append('TRUE')
-                continue
-            #Get slope of line
-            try:
-                m_edge = (B[1] - A[1]) / (B[0] - A[0])
-            except ZeroDivisionError:
-                m_edge = _huge
-
-            try:
-                m_point = (Y- A[1]) / (X - A[0])
-            except ZeroDivisionError:
-                m_point = _huge
-
-            if m_point >= m_edge:
-                # The ray intersects with the edge
-                intersect.append('TRUE')
-                continue
-
-            # try:
-            #     p_y = (X - A[0]) / (B[0] - A[0]) * (B[1] - A[1]) + A[1]  # first part of boundary identifier
-            # except ZeroDivisionError:
-            #     p_x = _huge
-
-            if Y == (X - A[0]) / (B[0] - A[0]) * (B[1] - A[1]) + A[1] or X == A[0] or X == B[0]:
-                intersect.append('bound')
-
-            # c = A[1] - A[0]* m_edge
-            # if Y == (m_edge * X) + c:
-            #     intersect.append('bound')
-
-        return intersect
-
-
 #check if a list of points is within in the polygon
 q = Polygon(poly_points)
 a = [q.contains(p) for p in input_points]
+b = [q.bound(p) for p in input_points]
+
 # b = [q.boundary(p) for p in input_points]
 print(a)
-# print(b)
+print(b)
+print(len(b))
+
+
 
 #count intersections & determine if inside/outside/boundary polygon
-count = ([i.count('TRUE') for i in a], [i.count('FALSE') for i in a], [i.count('bound') for i in a])
+count = ([i.count('TRUE') for i in a], [i.count('FALSE') for i in a], [i.count('TRUE') for i in b])
 count_2 = transpose_matrix(count)
 print(count_2)
 lb = []
@@ -218,23 +227,22 @@ for i in count_2:
         lb.append('boundary')
 print(lb)
 
-
-# lb = []
-# for num in count:
-#     if (num % 2) == 0:
-#         print()
-#         lb.append('outside')
-#     else:
-#         lb.append('inside')
-# print(lb)
-#
 # Plot points
 plotter.add_polygon(poly_x, poly_y)
 for x, y, label in zip(input_x,input_y,lb):
     plotter.add_point(x, y, kind = label)
 plotter.show()
 
-
+###### GET MBR ########
+# p = Square(poly_points)
+# label_mbr = p.get_mbr(input_points)
+# boxy = transpose_matrix(p.mbr_box())
+# print(boxy)
+# plotter.add_polygon(poly_x, poly_y)
+# plotter.add_polygon(boxy[0], boxy[1])
+# for x, y, label in zip(input_x,input_y,label_mbr):
+#     plotter.add_point(x, y, kind = label)
+# plotter.show()
 
 
 # def main():
