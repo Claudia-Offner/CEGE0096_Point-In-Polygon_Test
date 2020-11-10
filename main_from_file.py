@@ -78,20 +78,6 @@ class Point:
         self.x = x
         self.y = y
 
-
-    def __iter__(self):
-        for each in self.__dict__.keys():
-            yield self.__getattribute__(each)
-
-    def __len__(self):
-        return len(self.x)
-
-    def x(self):
-        return self.x
-
-    def y(self):
-        return self.y
-
 # class Line:
 #
 #     def __init__(self, point_1, point_2):
@@ -99,9 +85,9 @@ class Point:
 #         self.__point_2 = point_2
 
 class Polygon:
-    def __init__(self, points):
+    def __init__(self, point):
         # points: a list of Points in clockwise order.
-        self.points = points
+        self.point = point
 
     def edges(self):
         # Returns a list of tuples that each contain 2 points of an edge
@@ -162,56 +148,22 @@ class Polygon:
 
 
     def bound(self, point):
-        _eps = 0.00001  # _eps is used to make sure points are not on the same line as vertexes
         boundary = []
         for edge in self.edges():
             # A is the lower point of the edge
             A, B = edge[0], edge[1]
             X, Y = point[0], point[1]
 
-            distance_1 =  ((A[0] - X) ** 2 + (A[1] - Y) ** 2) **1/2
-            distance_2 =  ((X - B[0]) ** 2 + (Y - B[1]) ** 2) **1/2
-            distance_3 =  ((A[0] - B[0]) ** 2 + (A[1] - B[1]) ** 2) **1/2
+            distance_1 = ((A[0] - X) ** 2 + (A[1] - Y) ** 2) **1/2
+            distance_2 = ((X - B[0]) ** 2 + (Y - B[1]) ** 2) **1/2
+            distance_3 = ((A[0] - B[0]) ** 2 + (A[1] - B[1]) ** 2) **1/2
 
             if distance_1 + distance_2 == distance_3:
-                boundary.append('TRUE')
+                boundary.append(point)
                 continue
 
-            if distance_1+ distance_2 > distance_3:
-                boundary.append('FALSE')
+        return boundary
 
-        count = [sum([i.count('TRUE') for i in boundary])]
-        lb = []
-        for i in count:
-            if i > 0:
-                lb.append('boundary')
-            else:
-                lb.append('no')
-        lb = ", ".join(lb)
-        return lb
-
-        # res = []
-        # for i in boundary:
-        #     if i == 'True' and self.inside(point) == 'inside':
-        #         res.append('Boundary')
-        #     else:
-        #         res.append('None')
-        # return boundary
-        #
-        #
-        # return boundary
-        #
-        #     # crossproduct = (Y - A[1]) * (X - A[0]) - (X - A[0]) * (Y - A[1])
-        #     # dotproduct = (X - A[0]) * (B[0] - A[0]) + (Y - A[1]) * (B[1] - A[1])
-        #     # squaredlengthba = (B[0] - A[0]) * (B[0] - A[0]) + (B[1] - A[1]) * (B[1] - A[1])
-        #     #
-        #     # # compare versus epsilon for floating point values, or != 0 if using integers
-        #     # if abs(crossproduct) > _eps and dotproduct < 0 and dotproduct > squaredlengthba:
-        #     #     boundary.append('True')
-        #     # else:
-        #     #     boundary.append('False')
-        #
-        # return boundary
 
 class Square(Polygon): ## MBR CLASS ##
 
@@ -256,37 +208,41 @@ class Square(Polygon): ## MBR CLASS ##
         min_x, min_y, max_x, max_y = b[0], b[1], b[2], b[3]
         return [(min_x, min_y), (max_x, min_y), (max_x, max_y), (min_x, max_y)]
 
-#check if a list of points is within in the polygon
-q = Polygon(poly_points)
-a = [q.inside(p) for p in input_points]
-b = [q.bound(p) for p in input_points]
-# for point in input_points:
-#     if q.boundary[point] is True:
-#         c.append(point)
 
-print(a)
+# make it so that it feeds one point at a time (keep it simple)
+# check if in the mbr
+# check if on the boundary
+# check rca
+
+
+#check if a list of points is within in the polygon
+q = Polygon(Point(poly_x, poly_y))
+a = [q.inside(p) for p in Point(input_x, input_y)]
+b = bound(poly_points, input_points)
+# print(a)
 print(b)
 
-res = (a, b)
-res = transpose_matrix(res)
-print(res)
-#
-# #count intersections & determine if inside/outside/boundary polygon
-# count = ([i.count('TRUE') for i in a], [i.count('FALSE') for i in a], [i.count('True') for i in b])
-# count_2 = transpose_matrix(count)
-# print(count_2)
-lb = []
-for i in res:
-    if i[1] == 'no':
-        lb.append(i[0])
-    else:
-        lb.append('boundary')
+# c = []
+# for point in input_points:
+#     if q.bound[point] == 'boundary':
+#         c.append(point)
+# print(c)
 
-print(lb)
+# count intersections & determine if inside/outside/boundary polygon
+
+# res = (a, b)
+# res = transpose_matrix(res)
+# lb = []
+# for i in res:
+#     if i[1] == 'no':
+#         lb.append(i[0])
+#     else:
+#         lb.append('boundary')
+# print(lb)
 
 #Plot points
 plotter.add_polygon(poly_x, poly_y)
-for x, y, label in zip(input_x,input_y, lb):
+for x, y, label in zip(input_x,input_y, a):
     plotter.add_point(x, y, kind = label)
 plotter.show()
 
