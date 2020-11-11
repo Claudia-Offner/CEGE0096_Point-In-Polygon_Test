@@ -245,7 +245,10 @@ if __name__ == "__main__":
     print('Points on Boundary: bound_on ', bound_on)
     print('Points on boundary: ', len(bound_on))    # should be 24
     print('Points off boundary: ', len(bound_off))
-    # SUCESS
+    # SUCESS but 7 vertex points were not included
+
+    #ADD VERTEX POINTS TO BOUNDARY LIST BEFORE MOVING FORWARD
+
 
     off_bound = [] # Create point object for points not on boundary
     for i in bound_off:
@@ -255,31 +258,31 @@ if __name__ == "__main__":
     ''' 
     Get RCA results based on points inside mbr and not on boundary 
     '''
-    # rca_id = [i.id for i in off_bound]
-    # rca_x = [i.x for i in off_bound]
-    # rca_y = [i.y for i in off_bound]
-    # rca_out = [p.contains(i) for i in off_bound]
-    # rca_res = []
-    # for i in rca_out:
-    #     if i == True:
-    #         rca_res.append('inside')
-    #     else:
-    #         rca_res.append('outside')
-    # rca_res = transpose_matrix([rca_id, rca_x, rca_y, rca_res])
-    # # print('RCA Results: ', rca_res)
-    #
-    # rca_in = []  # Get points INSIDE polygon
-    # rca_out = []
-    # for i in rca_res:
-    #     if i[3] == 'inside':
-    #         rca_in.append(i)
-    #     else:
-    #         rca_out.append(i)
-    #         continue
-    # print('Points Inside RCA: rca_in ', rca_in)
-    # print('Points in rca: ', len(rca_in))   # should be 15
-    # print('Points out of rca: ', len(rca_in))
+    rca_id = [i.id for i in off_bound]
+    rca_x = [i.x for i in off_bound]
+    rca_y = [i.y for i in off_bound]
+    rca_out = [p.contains(i) for i in off_bound]
+    rca_res = []
+    for i in rca_out:
+        if i == True:
+            rca_res.append('inside')
+        else:
+            rca_res.append('outside')
+    rca_res = transpose_matrix([rca_id, rca_x, rca_y, rca_res])
+    # print('RCA Results: ', rca_res)
 
+    rca_in = []  # Get points INSIDE polygon
+    rca_out = []
+    for i in rca_res:
+        if i[3] == 'inside':
+            rca_in.append(i)
+        else:
+            rca_out.append(i)
+            continue
+    print('Points Inside RCA: rca_in ', rca_in)
+    print('Points in rca: ', len(rca_in))   # should be 15
+    print('Points out of rca: ', len(rca_in))
+    # SUCESS
     '''
     Classify data outputs
     '''
