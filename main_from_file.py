@@ -1,6 +1,10 @@
 from plotter import Plotter
 import sys
 
+## https://rosettacode.org/wiki/Ray-casting_algorithm#Python
+## http://philliplemons.com/posts/ray-casting-algorithm
+## https://excalibur.apache.org/framework/best-practices.html
+## https://www.programiz.com/python-programming/examples/transpose-matrix
 def coord_reader(path):
     with open(path,'r') as f:
         data = f.readlines()[1:]  # skip header
@@ -13,10 +17,16 @@ def coord_reader(path):
 
 def transpose_matrix(matrix):
     res = []
-    result = [[matrix[j][i] for j in range(len(matrix))] for i in range(len(matrix[0]))] #https://www.programiz.com/python-programming/examples/transpose-matrix
+    result = [[matrix[j][i] for j in range(len(matrix))] for i in range(len(matrix[0]))]
     for r in result:
         res.append(r)
     return res
+
+def sqrt(n):
+  if n < 0:
+    return
+  else:
+    return n**0.5
 
 class Point:
     def __init__(self, id, x, y):
@@ -28,14 +38,16 @@ class Polygon:
     def __init__(self, points):
         self.points = points
 
+    def get_points(self):
+        return self.points
+
     def edges(self):
-        edge_list = []
+        res = []
         for i,p in enumerate(self.points):
             p1 = p
             p2 = self.points[(i+1) % len(self.points)]
-            edge_list.append((p1,p2))
-
-        return edge_list
+            res.append((p1,p2))
+        return res
 
     def contains(self, point):
         # _huge is used to act as infinity if we divide by 0
@@ -86,14 +98,13 @@ class Polygon:
     def bound(self, point):
         boundary = False
         for edge in self.edges():
-            # A is the lower point of the edge
             A, B = edge[0], edge[1]
 
-            distance_1 = ((A.x - point.x) ** 2 + (A.y - point.y) ** 2) **1/2
-            distance_2 = ((point.x - B.x) ** 2 + (point.y - B.y) ** 2) **1/2
-            distance_3 = ((A.x - B.x) ** 2 + (A.y - B.y) ** 2) **1/2
+            AP = sqrt((A.x - point.x) ** 2 + (A.y - point.y) ** 2)
+            PB = sqrt((point.x - B.x) ** 2 + (point.y - B.y) ** 2)
+            AB = sqrt((A.x - B.x) ** 2 + (A.y - B.y) ** 2)
 
-            if distance_1 + distance_2 == distance_3:
+            if AP + PB == AB:
                 boundary = not boundary
                 continue
 
@@ -194,7 +205,7 @@ if __name__ == "__main__":
         else:
             mbr_out.append(i)
             continue
-    print('Points outside MBR: mbr_out ', mbr_out)
+    # print('Points outside MBR: mbr_out ', mbr_out)
     print('Points inside mbr: ', len(mbr_in))
     print('Points outside mbr: ', len(mbr_out))
     # SUCCESS
@@ -205,12 +216,15 @@ if __name__ == "__main__":
         in_mbr.append(point)
 
     '''
-    Get Boundary results based on point inside mbr
+    Get BOUNDARY results based on point inside mbr
     '''
     bound_id = [i.id for i in in_mbr]
     bound_x = [i.x for i in in_mbr]
     bound_y = [i.y for i in in_mbr]
     bound_out = [p.bound(i) for i in in_mbr]
+    # There seems to be something wrong with the edges method in bound
+    # print(bound_out)
+
     bound_res = []
     for i in bound_out:
         if i == True:
@@ -218,7 +232,7 @@ if __name__ == "__main__":
         else:
             bound_res.append('n/a')
     bound_res = transpose_matrix([bound_id, bound_x, bound_y, bound_res])
-    # print('Boundary Results: ', bound_res)
+    print('Boundary Results: ', bound_res)
 
     bound_on = []  # Get points on AND off boundary
     bound_off = []
@@ -229,9 +243,9 @@ if __name__ == "__main__":
             bound_off.append(i)
             continue
     print('Points on Boundary: bound_on ', bound_on)
-    print('Points on boundary: ', len(bound_on)) # should be 17 not 7
+    print('Points on boundary: ', len(bound_on))    # should be 24
     print('Points off boundary: ', len(bound_off))
-
+    # SUCESS
 
     off_bound = [] # Create point object for points not on boundary
     for i in bound_off:
@@ -241,109 +255,66 @@ if __name__ == "__main__":
     ''' 
     Get RCA results based on points inside mbr and not on boundary 
     '''
-    rca_id = [i.id for i in off_bound]
-    rca_x = [i.x for i in off_bound]
-    rca_y = [i.y for i in off_bound]
-    rca_out = [p.contains(i) for i in off_bound]
-    rca_res = []
-    for i in rca_out:
-        if i == True:
-            rca_res.append('inside')
-        else:
-            rca_res.append('outside')
-    rca_res = transpose_matrix([rca_id, rca_x, rca_y, rca_res])
-    # print('RCA Results: ', rca_res)
-
-    rca_in = []  # Get points INSIDE polygon
-    rca_out = []
-    for i in rca_res:
-        if i[3] == 'inside':
-            rca_in.append(i)
-        else:
-            rca_out.append(i)
-            continue
-    print('Points Inside RCA: rca_in ', rca_in)
-    print('Points in rca: ', len(rca_in))
-    print('Points out of rca: ', len(rca_in))
+    # rca_id = [i.id for i in off_bound]
+    # rca_x = [i.x for i in off_bound]
+    # rca_y = [i.y for i in off_bound]
+    # rca_out = [p.contains(i) for i in off_bound]
+    # rca_res = []
+    # for i in rca_out:
+    #     if i == True:
+    #         rca_res.append('inside')
+    #     else:
+    #         rca_res.append('outside')
+    # rca_res = transpose_matrix([rca_id, rca_x, rca_y, rca_res])
+    # # print('RCA Results: ', rca_res)
+    #
+    # rca_in = []  # Get points INSIDE polygon
+    # rca_out = []
+    # for i in rca_res:
+    #     if i[3] == 'inside':
+    #         rca_in.append(i)
+    #     else:
+    #         rca_out.append(i)
+    #         continue
+    # print('Points Inside RCA: rca_in ', rca_in)
+    # print('Points in rca: ', len(rca_in))   # should be 15
+    # print('Points out of rca: ', len(rca_in))
 
     '''
     Classify data outputs
     '''
-    final = []
-    for p in input_p:
-        for i in mbr_out:
-            if p.id == i[0]:
-                final.append(i)
-            else:
-                continue
-        for i in bound_on:
-            if p.id == i[0]:
-                final.append(i)
-            else:
-                continue
-        for i in rca_in:
-            if p.id == i[0]:
-                final.append(i)
-
-    print(len(mbr_out) + len(bound_on) + len(rca_in))
-    final = transpose_matrix(final)
-        # if i.id ==
-        #
-    #if MBR_results = inside
-        # identify boundry points for the polygon
-            #if NOT a boundary point, run RCA
+    # final = []
+    # for p in input_p:
+    #     for i in mbr_out:
+    #         if p.id == i[0]:
+    #             final.append(i)
+    #         else:
+    #             continue
+    #     for i in bound_on:
+    #         if p.id == i[0]:
+    #             final.append(i)
+    #         else:
+    #             continue
+    #     for i in rca_in:
+    #         if p.id == i[0]:
+    #             final.append(i)
+    #
+    # print(len(mbr_out) + len(bound_on) + len(rca_in))
+    # final = transpose_matrix(final)
+    #
 
     '''
     Plot points
     '''
     plotter.add_polygon(poly_x, poly_y)
-    for x, y, label in zip(input_x, input_y, [i[3] for i in bound_res]):
+    # plotter.add_point(bound_x, bound_y)
+    for x, y, label in zip(bound_x, bound_y, [i[3] for i in bound_res]):
         plotter.add_point(x, y, kind = label)
     plotter.show()
 
 
 
 
-# p_x = [point.x for point in poly_p]
-# p_y = [point.y for point in poly_p]
-# print(p_p)
-# transpose_matrix(p_p)
-# print(p_p)
-
-# px = []
-# py = []
-# for point in poly_p:
-#     px.append(point.get_x())
-#     py.append(point.get_y())
-
-
-# Convert input list into points
-# input_p = []
-# for i in input_list:
-#     point = Point(i[0], i[1], i[2])
-#     input_p.append(point)
-# for point in input_p:
-#     print(point.x, point.y)
-#
-# l = [point for point in poly_p]
-# print(l)
-# p = Polygon()
-# # q = Polygon([Point(20, 10), Point(50, 125), Point(125, 90), Point(150, 10)])
-# p1 = Point(75, 50)
-# print(str(p.edges()))
-
-# for i in q.get_point():
-#     print(i.edges())
-
-# # x1, y1 = zip(*coords(polygon.get_points()))
-# print(polygon.get_point())
-
-
-# plotter = Plotter()
-# plotter.add_polygon(poly_x, poly_y)
-# plotter.add_point(input_x, input_y)
-# # plotter.show()
-#
 
 
 
@@ -370,68 +341,6 @@ if __name__ == "__main__":
 
 
 
-##Import code from FUNCTION/CLASS file here
-
-#sources
-## https://rosettacode.org/wiki/Ray-casting_algorithm#Python
-## http://philliplemons.com/posts/ray-casting-algorithm
-## https://excalibur.apache.org/framework/best-practices.html
-
-
-## READ list of x,y coordinates from POLGYON.CSV as poly_points (list)
-
-# def coord_reader(path):
-#     with open(path,'r') as f:
-#         data = f.readlines()[1:]  # skip header
-#         points = []
-#         for line in data:
-#             res = line.rstrip().split(',')[1:]  # split by line
-#             res = [float(i) for i in res]  # convert to integers
-#             points.append(res)
-#MATRIX CREATOR: combine mbr results with data points (from columns to rows AND rows to columns)
-# def transpose_matrix(matrix):
-#     res = []
-#     result = [[matrix[j][i] for j in range(len(matrix))] for i in range(len(matrix[0]))] #https://www.programiz.com/python-programming/examples/transpose-matrix
-#     for r in result:
-#         res.append(r)
-#     return res
-#
-#
-# with open('polygon.csv', 'r') as f:
-#     data = f.readlines()[1:] #skip header
-#     poly_points = []
-#     poly_x = []
-#     poly_y = []
-#     for line in data:
-#         res = line.rstrip().split(',')[1:] #split by line
-#         res = [float(i) for i in res] #convert to integers
-#         poly_points.append(res)
-#     poly_x = [i[0] for i in poly_points]
-#     poly_y = [i[1] for i in poly_points]
-# print(poly_points)
-# print(poly_x)
-# print(poly_y)
-#
-# with open('input.csv', 'r') as f:
-#     data = f.readlines()[1:] #skip header
-#     input_points = []
-#     input_x = []
-#     input_y = []
-#     for line in data:
-#         res = line.rstrip().split(',')[1:] #split by line
-#         res = [float(i) for i in res] #convert to integers
-#         input_points.append(res)
-#     input_x = [i[0] for i in input_points]
-#     input_y = [i[1] for i in input_points]
-# print(input_points)
-# print(input_x)
-# print(input_y)
-#
-# plotter = Plotter()
-# # plotter.add_polygon(poly_x, poly_y)
-# # plotter.add_point(input_x, input_y)
-# # plotter.show()
-#
 #
 #
 # # CATEGORISE input_points as inside, outside or boundary and save to category_result (list)
@@ -575,48 +484,6 @@ if __name__ == "__main__":
 # # check if on the boundary
 # # check rca
 #
-#
-# #check if a list of points is within in the polygon
-# q = Polygon(Point(poly_x, poly_y))
-# a = [q.inside(p) for p in Point(input_x, input_y)]
-# b = bound(poly_points, input_points)
-# # print(a)
-# print(b)
-#
-# # c = []
-# # for point in input_points:
-# #     if q.bound[point] == 'boundary':
-# #         c.append(point)
-# # print(c)
-#
-# # count intersections & determine if inside/outside/boundary polygon
-#
-# # res = (a, b)
-# # res = transpose_matrix(res)
-# # lb = []
-# # for i in res:
-# #     if i[1] == 'no':
-# #         lb.append(i[0])
-# #     else:
-# #         lb.append('boundary')
-# # print(lb)
-#
-# #Plot points
-# plotter.add_polygon(poly_x, poly_y)
-# for x, y, label in zip(input_x,input_y, a):
-#     plotter.add_point(x, y, kind = label)
-# plotter.show()
-
-###### GET MBR ########
-# p = Square(poly_points)
-# label_mbr = p.get_mbr(input_points)
-# boxy = transpose_matrix(p.mbr_box())
-# print(boxy)
-# plotter.add_polygon(poly_x, poly_y)
-# plotter.add_polygon(boxy[0], boxy[1])
-# for x, y, label in zip(input_x,input_y,label_mbr):
-#     plotter.add_point(x, y, kind = label)
-# plotter.show()
 
 
 # def main():
