@@ -215,16 +215,15 @@ if __name__ == "__main__":
         point = Point(i[0], i[1], i[2])
         in_mbr.append(point)
 
+    # Try extracting vertex points before running boundary
+
     '''
-    Get BOUNDARY results based on point inside mbr
+    Get BOUNDARY results based on point inside mbr without vertex points
     '''
     bound_id = [i.id for i in in_mbr]
     bound_x = [i.x for i in in_mbr]
     bound_y = [i.y for i in in_mbr]
-    bound_out = [p.bound(i) for i in in_mbr]
-    # There seems to be something wrong with the edges method in bound
-    # print(bound_out)
-
+    bound_out = [p.bound(i) for i in bound_1]
     bound_res = []
     for i in bound_out:
         if i == True:
@@ -245,7 +244,7 @@ if __name__ == "__main__":
     print('Points on Boundary: bound_on ', bound_on)
     print('Points on boundary: ', len(bound_on))    # should be 24
     print('Points off boundary: ', len(bound_off))
-    # SUCESS but 7 vertex points were not included
+    # SUCCESS but 7 vertex points were not included
 
     #ADD VERTEX POINTS TO BOUNDARY LIST BEFORE MOVING FORWARD
 
@@ -282,7 +281,7 @@ if __name__ == "__main__":
     print('Points Inside RCA: rca_in ', rca_in)
     print('Points in rca: ', len(rca_in))   # should be 15
     print('Points out of rca: ', len(rca_in))
-    # SUCESS
+    # SUCCESS
     '''
     Classify data outputs
     '''
