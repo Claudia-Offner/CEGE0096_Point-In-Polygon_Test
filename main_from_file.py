@@ -149,6 +149,7 @@ if __name__ == "__main__":
     poly_list = coord_reader('polygon.csv')
     input_list = coord_reader('input.csv')
 
+
     # Extract X's and Y's from points for plotter inputs
     poly_x = [i[1] for i in poly_list]
     poly_y = [i[2] for i in poly_list]
@@ -170,32 +171,42 @@ if __name__ == "__main__":
     s = Square([point for point in poly_p])
     # Create Polygon Object
     p = Polygon([point for point in poly_p])
+    # Create Plotter Object
+    plotter = Plotter()
 
 
-    # Get MBR results
+    '''
+    Get MBR results
+    '''
     mbr_id = [i.id for i in input_p]
     mbr_x = [i.x for i in input_p]
     mbr_y = [i.y for i in input_p]
     mbr_out = [s.get_mbr(i) for i in input_p]
     mbr_out = [item for l in mbr_out for item in l]
     mbr_res = transpose_matrix([mbr_id, mbr_x, mbr_y, mbr_out])
-    print(mbr_res)
+    # print('MBR Results: ', mbr_res)
 
     mbr_in = [] # Get points inside mbr
+    mbr_out = [] # Get points outside mbr
     for i in mbr_res:
         if i[3] == 'inside':
             mbr_in.append(i)
         else:
+            mbr_out.append(i)
             continue
-    print(mbr_in)
+    print('Points outside MBR: mbr_out ', mbr_out)
+    print('Points inside mbr: ', len(mbr_in))
+    print('Points outside mbr: ', len(mbr_out))
+    # SUCCESS
 
-    in_mbr = [] # Create point object for point inside mbr
+    in_mbr = [] # Create point object for points inside mbr
     for i in mbr_in:
         point = Point(i[0], i[1], i[2])
         in_mbr.append(point)
 
-
-    # Get Boundary results based on point inside mbr
+    '''
+    Get Boundary results based on point inside mbr
+    '''
     bound_id = [i.id for i in in_mbr]
     bound_x = [i.x for i in in_mbr]
     bound_y = [i.y for i in in_mbr]
@@ -207,7 +218,7 @@ if __name__ == "__main__":
         else:
             bound_res.append('n/a')
     bound_res = transpose_matrix([bound_id, bound_x, bound_y, bound_res])
-    print(bound_res)
+    # print('Boundary Results: ', bound_res)
 
     bound_on = []  # Get points on AND off boundary
     bound_off = []
@@ -217,15 +228,19 @@ if __name__ == "__main__":
         else:
             bound_off.append(i)
             continue
-    print(bound_on)
-    print(bound_off)
+    print('Points on Boundary: bound_on ', bound_on)
+    print('Points on boundary: ', len(bound_on)) # should be 17 not 7
+    print('Points off boundary: ', len(bound_off))
+
 
     off_bound = [] # Create point object for points not on boundary
     for i in bound_off:
         point = Point(i[0], i[1], i[2])
         off_bound.append(point)
 
-    # Get RCA results based on points inside mbr and not on boundary
+    ''' 
+    Get RCA results based on points inside mbr and not on boundary 
+    '''
     rca_id = [i.id for i in off_bound]
     rca_x = [i.x for i in off_bound]
     rca_y = [i.y for i in off_bound]
@@ -237,31 +252,52 @@ if __name__ == "__main__":
         else:
             rca_res.append('outside')
     rca_res = transpose_matrix([rca_id, rca_x, rca_y, rca_res])
-    print(rca_res)
+    # print('RCA Results: ', rca_res)
 
     rca_in = []  # Get points INSIDE polygon
-    # rca_out = []
+    rca_out = []
     for i in rca_res:
         if i[3] == 'inside':
             rca_in.append(i)
         else:
-            # rca_out.append(i)
+            rca_out.append(i)
             continue
-    print(rca_in)
+    print('Points Inside RCA: rca_in ', rca_in)
+    print('Points in rca: ', len(rca_in))
+    print('Points out of rca: ', len(rca_in))
 
-    # Classify data outputs
+    '''
+    Classify data outputs
+    '''
+    final = []
+    for p in input_p:
+        for i in mbr_out:
+            if p.id == i[0]:
+                final.append(i)
+            else:
+                continue
+        for i in bound_on:
+            if p.id == i[0]:
+                final.append(i)
+            else:
+                continue
+        for i in rca_in:
+            if p.id == i[0]:
+                final.append(i)
 
-    for i in input_p:
+    print(len(mbr_out) + len(bound_on) + len(rca_in))
+    final = transpose_matrix(final)
         # if i.id ==
         #
     #if MBR_results = inside
         # identify boundry points for the polygon
             #if NOT a boundary point, run RCA
 
-    #Plot points
-    plotter = Plotter()
+    '''
+    Plot points
+    '''
     plotter.add_polygon(poly_x, poly_y)
-    for x, y, label in zip(input_x, input_y, rca_res):
+    for x, y, label in zip(input_x, input_y, [i[3] for i in bound_res]):
         plotter.add_point(x, y, kind = label)
     plotter.show()
 
