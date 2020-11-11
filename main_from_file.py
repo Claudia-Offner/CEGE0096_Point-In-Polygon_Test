@@ -11,55 +11,268 @@ def coord_reader(path):
             points.append(res)
         return points
 
+def transpose_matrix(matrix):
+    res = []
+    result = [[matrix[j][i] for j in range(len(matrix))] for i in range(len(matrix[0]))] #https://www.programiz.com/python-programming/examples/transpose-matrix
+    for r in result:
+        res.append(r)
+    return res
+
 class Point:
     def __init__(self, id, x, y):
         self.id = id
         self.x = x
         self.y = y
 
-    def get_x(self):
-        return self.x
-
-    def get_y(self):
-        return self.y
-
 class Polygon:
-    def __init__(self, point):
-        # points: a list of Points in clockwise order.
-        self.point = point
-
-    def get_point(self):
-        return self.point
+    def __init__(self, points):
+        self.points = points
 
     def edges(self):
-        # Returns a list of tuples that each contain 2 points of an edge
         edge_list = []
-        for i, p in enumerate(self.point):
+        for i,p in enumerate(self.points):
             p1 = p
-            p2 = self.point[(i + 1) % len(self.point)]
-            edge_list.append((p1, p2))
+            p2 = self.points[(i+1) % len(self.points)]
+            edge_list.append((p1,p2))
+
         return edge_list
 
+    def contains(self, point):
+        # _huge is used to act as infinity if we divide by 0
+        _huge = sys.float_info.max
+        # _eps is used to make sure points are not on the same line as vertexes
+        _eps = 0.00001
 
-# Read data from files
-poly_list = coord_reader('polygon.csv')
-input_list = coord_reader('input.csv')
+        # We start on the outside of the polygon
+        inside = False
+        for edge in self.edges():
+            # Make sure A is the lower point of the edge
+            A, B = edge[0], edge[1]
+            if A.y > B.y:
+                A, B = B, A
 
-#Extract X's and Y's from points
-poly_x = [i[1] for i in poly_list]
-poly_y = [i[2] for i in poly_list]
-input_x = [i[1] for i in input_list]
-input_y = [i[2] for i in input_list]
-print(poly_list)
-print(input_list)
+            # Make sure point is not at same height as vertex
+            if point.y == A.y or point.y == B.y:
+                point.y += _eps
 
-# Convert polygon list into points
-poly_p = []
-for i in poly_list:
-    point = Point(i[0], i[1], i[2])
-    poly_p.append(point)
-for point in poly_p:
-    print(point.x, point.y)
+            if point.x == A.x or point.x == B.x:
+                point.x += _eps
+
+            if (point.y > B.y or point.y < A.y or point.x > max(A.x, B.x)):
+                # The horizontal ray does not intersect with the edge
+                continue
+
+            if point.x < min(A.x, B.x):  # The ray intersects with the edge
+                inside = not inside
+                continue
+
+            try:
+                m_edge = (B.y - A.y) / (B.x - A.x)
+            except ZeroDivisionError:
+                m_edge = _huge
+
+            try:
+                m_point = (point.y - A.y) / (point.x - A.x)
+            except ZeroDivisionError:
+                m_point = _huge
+
+            if m_point >= m_edge:
+                # The ray intersects with the edge
+                inside = not inside
+                continue
+
+        return inside
+
+    def bound(self, point):
+        boundary = False
+        for edge in self.edges():
+            # A is the lower point of the edge
+            A, B = edge[0], edge[1]
+
+            distance_1 = ((A.x - point.x) ** 2 + (A.y - point.y) ** 2) **1/2
+            distance_2 = ((point.x - B.x) ** 2 + (point.y - B.y) ** 2) **1/2
+            distance_3 = ((A.x - B.x) ** 2 + (A.y - B.y) ** 2) **1/2
+
+            if distance_1 + distance_2 == distance_3:
+                boundary = not boundary
+                continue
+
+        return boundary
+
+class Square(Polygon): ## MBR CLASS ##
+
+    def __init__(self, points):
+        super().__init__(points)
+
+    def basic_mbr(self):  # source: https://stackoverflow.com/questions/20808393/python-defining-a-minimum-bounding-rectangle
+
+        min_x = 100000  # start with something much higher than expected min
+        min_y = 100000
+        max_x = -100000  # start with something much lower than expected max
+        max_y = -100000
+
+        for item in self.points:
+            if item.x < min_x:
+                min_x = item.x
+
+            if item.x > max_x:
+                max_x = item.x
+
+            if item.y < min_y:
+                min_y = item.y
+
+            if item.y > max_y:
+                max_y = item.y
+
+        return [min_x, min_y, max_x, max_y] # return [(min_x, min_y), (max_x, min_y), (max_x, max_y), (min_x, max_y)] if you want the coords
+
+    def get_mbr(self, point):
+        mbr = []
+        a = self.basic_mbr()
+        min_x, min_y, max_x, max_y = a[0], a[1], a[2], a[3]
+        # for i in points:
+        if min_x <= point.x <= max_x and min_y <= point.y <= max_y:
+            mbr.append('inside')
+        else:
+            mbr.append('outside')
+        return mbr
+
+    def mbr_box(self):
+        b = self.basic_mbr()
+        min_x, min_y, max_x, max_y = b[0], b[1], b[2], b[3]
+        return [[min_x, min_y], [max_x, min_y], [max_x, max_y], [min_x, max_y]]
+
+
+if __name__ == "__main__":
+
+    # Read data from files
+    poly_list = coord_reader('polygon.csv')
+    input_list = coord_reader('input.csv')
+
+    # Extract X's and Y's from points for plotter inputs
+    poly_x = [i[1] for i in poly_list]
+    poly_y = [i[2] for i in poly_list]
+    input_x = [i[1] for i in input_list]
+    input_y = [i[2] for i in input_list]
+
+    # Convert polygon and input lists into points
+    poly_p = []
+    for i in poly_list:
+        point = Point(i[0], i[1], i[2])
+        poly_p.append(point)
+
+    input_p = []
+    for i in input_list:
+        point = Point(i[0], i[1], i[2])
+        input_p.append(point)
+
+    # Create MBR Object
+    s = Square([point for point in poly_p])
+    # Create Polygon Object
+    p = Polygon([point for point in poly_p])
+
+
+    # Get MBR results
+    mbr_id = [i.id for i in input_p]
+    mbr_x = [i.x for i in input_p]
+    mbr_y = [i.y for i in input_p]
+    mbr_out = [s.get_mbr(i) for i in input_p]
+    mbr_out = [item for l in mbr_out for item in l]
+    mbr_res = transpose_matrix([mbr_id, mbr_x, mbr_y, mbr_out])
+    print(mbr_res)
+
+    mbr_in = [] # Get points inside mbr
+    for i in mbr_res:
+        if i[3] == 'inside':
+            mbr_in.append(i)
+        else:
+            continue
+    print(mbr_in)
+
+    in_mbr = [] # Create point object for point inside mbr
+    for i in mbr_in:
+        point = Point(i[0], i[1], i[2])
+        in_mbr.append(point)
+
+
+    # Get Boundary results based on point inside mbr
+    bound_id = [i.id for i in in_mbr]
+    bound_x = [i.x for i in in_mbr]
+    bound_y = [i.y for i in in_mbr]
+    bound_out = [p.bound(i) for i in in_mbr]
+    bound_res = []
+    for i in bound_out:
+        if i == True:
+            bound_res.append('boundary')
+        else:
+            bound_res.append('n/a')
+    bound_res = transpose_matrix([bound_id, bound_x, bound_y, bound_res])
+    print(bound_res)
+
+    bound_on = []  # Get points on AND off boundary
+    bound_off = []
+    for i in bound_res:
+        if i[3] == 'boundary':
+            bound_on.append(i)
+        else:
+            bound_off.append(i)
+            continue
+    print(bound_on)
+    print(bound_off)
+
+    off_bound = [] # Create point object for points not on boundary
+    for i in bound_off:
+        point = Point(i[0], i[1], i[2])
+        off_bound.append(point)
+
+    # Get RCA results based on points inside mbr and not on boundary
+    rca_id = [i.id for i in off_bound]
+    rca_x = [i.x for i in off_bound]
+    rca_y = [i.y for i in off_bound]
+    rca_out = [p.contains(i) for i in off_bound]
+    rca_res = []
+    for i in rca_out:
+        if i == True:
+            rca_res.append('inside')
+        else:
+            rca_res.append('outside')
+    rca_res = transpose_matrix([rca_id, rca_x, rca_y, rca_res])
+    print(rca_res)
+
+    rca_in = []  # Get points INSIDE polygon
+    # rca_out = []
+    for i in rca_res:
+        if i[3] == 'inside':
+            rca_in.append(i)
+        else:
+            # rca_out.append(i)
+            continue
+    print(rca_in)
+
+    # Classify data outputs
+
+    for i in input_p:
+        # if i.id ==
+        #
+    #if MBR_results = inside
+        # identify boundry points for the polygon
+            #if NOT a boundary point, run RCA
+
+    #Plot points
+    plotter = Plotter()
+    plotter.add_polygon(poly_x, poly_y)
+    for x, y, label in zip(input_x, input_y, rca_res):
+        plotter.add_point(x, y, kind = label)
+    plotter.show()
+
+
+
+
+# p_x = [point.x for point in poly_p]
+# p_y = [point.y for point in poly_p]
+# print(p_p)
+# transpose_matrix(p_p)
+# print(p_p)
 
 # px = []
 # py = []
@@ -75,21 +288,26 @@ for point in poly_p:
 #     input_p.append(point)
 # for point in input_p:
 #     print(point.x, point.y)
+#
+# l = [point for point in poly_p]
+# print(l)
+# p = Polygon()
+# # q = Polygon([Point(20, 10), Point(50, 125), Point(125, 90), Point(150, 10)])
+# p1 = Point(75, 50)
+# print(str(p.edges()))
 
-q = Polygon(poly_p)
-# print(q.edges())
+# for i in q.get_point():
+#     print(i.edges())
 
-for i in q.get_point():
-    print(i.edges())
 # # x1, y1 = zip(*coords(polygon.get_points()))
 # print(polygon.get_point())
 
 
-plotter = Plotter()
-plotter.add_polygon(poly_x, poly_y)
-plotter.add_point(input_x, input_y)
-# plotter.show()
-
+# plotter = Plotter()
+# plotter.add_polygon(poly_x, poly_y)
+# plotter.add_point(input_x, input_y)
+# # plotter.show()
+#
 
 
 
