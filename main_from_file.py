@@ -223,7 +223,8 @@ if __name__ == "__main__":
     bound_id = [i.id for i in in_mbr]
     bound_x = [i.x for i in in_mbr]
     bound_y = [i.y for i in in_mbr]
-    bound_out = [p.bound(i) for i in bound_1]
+    bound_out = [p.bound(i) for i in in_mbr]
+
     bound_res = []
     for i in bound_out:
         if i == True:
@@ -231,9 +232,24 @@ if __name__ == "__main__":
         else:
             bound_res.append('n/a')
     bound_res = transpose_matrix([bound_id, bound_x, bound_y, bound_res])
+
+    # Categorise vertices as boundary
+    vertex_on = []
+    for i in bound_res:
+        for j in poly_list:
+            if i[1] == j[1] and i[2] == j[2]:
+                vertex_on.append(i)
+    for i in vertex_on:
+        i[3] = 'boundary'
+    # Replace vertex values with the correct values
+    for i in bound_res:
+        for j in vertex_on:
+            if i[0] == j[0]:
+                i = j
     print('Boundary Results: ', bound_res)
 
-    bound_on = []  # Get points on AND off boundary
+    # Get points on AND off boundary
+    bound_on = []
     bound_off = []
     for i in bound_res:
         if i[3] == 'boundary':
@@ -244,9 +260,7 @@ if __name__ == "__main__":
     print('Points on Boundary: bound_on ', bound_on)
     print('Points on boundary: ', len(bound_on))    # should be 24
     print('Points off boundary: ', len(bound_off))
-    # SUCCESS but 7 vertex points were not included
-
-    #ADD VERTEX POINTS TO BOUNDARY LIST BEFORE MOVING FORWARD
+    # SUCCESS
 
 
     off_bound = [] # Create point object for points not on boundary
@@ -257,30 +271,30 @@ if __name__ == "__main__":
     ''' 
     Get RCA results based on points inside mbr and not on boundary 
     '''
-    rca_id = [i.id for i in off_bound]
-    rca_x = [i.x for i in off_bound]
-    rca_y = [i.y for i in off_bound]
-    rca_out = [p.contains(i) for i in off_bound]
-    rca_res = []
-    for i in rca_out:
-        if i == True:
-            rca_res.append('inside')
-        else:
-            rca_res.append('outside')
-    rca_res = transpose_matrix([rca_id, rca_x, rca_y, rca_res])
-    # print('RCA Results: ', rca_res)
-
-    rca_in = []  # Get points INSIDE polygon
-    rca_out = []
-    for i in rca_res:
-        if i[3] == 'inside':
-            rca_in.append(i)
-        else:
-            rca_out.append(i)
-            continue
-    print('Points Inside RCA: rca_in ', rca_in)
-    print('Points in rca: ', len(rca_in))   # should be 15
-    print('Points out of rca: ', len(rca_in))
+    # rca_id = [i.id for i in off_bound]
+    # rca_x = [i.x for i in off_bound]
+    # rca_y = [i.y for i in off_bound]
+    # rca_out = [p.contains(i) for i in off_bound]
+    # rca_res = []
+    # for i in rca_out:
+    #     if i == True:
+    #         rca_res.append('inside')
+    #     else:
+    #         rca_res.append('outside')
+    # rca_res = transpose_matrix([rca_id, rca_x, rca_y, rca_res])
+    # # print('RCA Results: ', rca_res)
+    #
+    # rca_in = []  # Get points INSIDE polygon
+    # rca_out = []
+    # for i in rca_res:
+    #     if i[3] == 'inside':
+    #         rca_in.append(i)
+    #     else:
+    #         rca_out.append(i)
+    #         continue
+    # print('Points Inside RCA: rca_in ', rca_in)
+    # print('Points in rca: ', len(rca_in))   # should be 15
+    # print('Points out of rca: ', len(rca_in))
     # SUCCESS
     '''
     Classify data outputs
@@ -312,7 +326,7 @@ if __name__ == "__main__":
     # plotter.add_point(bound_x, bound_y)
     for x, y, label in zip(bound_x, bound_y, [i[3] for i in bound_res]):
         plotter.add_point(x, y, kind = label)
-    plotter.show()
+    # plotter.show()
 
 
 
