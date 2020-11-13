@@ -1,24 +1,29 @@
 import sys
 
-## Sources
-## MBR: https://stackoverflow.com/questions/20808393/python-defining-a-minimum-bounding-rectangle
-## RCA: https://rosettacode.org/wiki/Ray-casting_algorithm#Python
-## RCA: http://philliplemons.com/posts/ray-casting-algorithm
-## Transpose Matrix: https://www.programiz.com/python-programming/examples/transpose-matrix
+# Sources
+# MBR: https://stackoverflow.com/questions/20808393/python-defining-a-minimum-bounding-rectangle
+# RCA: https://rosettacode.org/wiki/Ray-casting_algorithm#Python
+# RCA: http://philliplemons.com/posts/ray-casting-algorithm
+# Transpose Matrix: https://www.programiz.com/python-programming/examples/transpose-matrix
+
 
 def sqrt(n):
-  if n < 0:
-    return
-  else:
-    return n**0.5
+    if n < 0:
+        return
+    else:
+        return n**0.5
+
 
 class Point:
-    def __init__(self, id, x, y):
-        self.id = id
+    # Point Class #
+    def __init__(self, name, x, y):
+        self.name = name
         self.x = x
         self.y = y
 
+
 class Polygon:
+    # RCA Class #
     def __init__(self, points):
         self.points = points
 
@@ -27,10 +32,10 @@ class Polygon:
 
     def edges(self):
         res = []
-        for i,p in enumerate(self.points):
+        for i, p in enumerate(self.points):
             p1 = p
             p2 = self.points[(i+1) % len(self.points)]
-            res.append((p1,p2))
+            res.append((p1, p2))
         return res
 
     def contains(self, point):
@@ -40,33 +45,33 @@ class Polygon:
         inside = False
         for edge in self.edges():
             # A needs to be the lower point of the edge
-            A, B = edge[0], edge[1]
-            if A.y > B.y:
-                A, B = B, A
+            a, b = edge[0], edge[1]
+            if a.y > b.y:
+                a, b = b, a
 
             # Point is not at same height as vertex
-            if point.y == A.y or point.y == B.y:
+            if point.y == a.y or point.y == b.y:
                 point.y += _eps
 
-            if point.x == A.x or point.x == B.x:
+            if point.x == a.x or point.x == b.x:
                 point.x += _eps
 
-            if (point.y > B.y or point.y < A.y or point.x > max(A.x, B.x)):
+            if point.y > b.y or point.y < a.y or point.x > max(a.x, b.x):
                 # The ray does NOT intersect with the edge
                 continue
 
-            if point.x < min(A.x, B.x):
+            if point.x < min(a.x, b.x):
                 # The ray intersects with the edge
                 inside = not inside
                 continue
 
             try:
-                m_edge = (B.y - A.y) / (B.x - A.x)
+                m_edge = (b.y - a.y) / (b.x - a.x)
             except ZeroDivisionError:
                 m_edge = _huge
 
             try:
-                m_point = (point.y - A.y) / (point.x - A.x)
+                m_point = (point.y - a.y) / (point.x - a.x)
             except ZeroDivisionError:
                 m_point = _huge
 
@@ -80,25 +85,26 @@ class Polygon:
     def bound(self, point):
         boundary = False
         for edge in self.edges():
-            A, B = edge[0], edge[1]
+            a, b = edge[0], edge[1]
 
-            AP = sqrt((A.x - point.x) ** 2 + (A.y - point.y) ** 2)  # Distance between A and point
-            PB = sqrt((point.x - B.x) ** 2 + (point.y - B.y) ** 2)  # Distance between point and B
-            AB = sqrt((A.x - B.x) ** 2 + (A.y - B.y) ** 2)  # Distance between A and B
+            ap = sqrt((a.x - point.x) ** 2 + (a.y - point.y) ** 2)  # Distance between A and point
+            pb = sqrt((point.x - b.x) ** 2 + (point.y - b.y) ** 2)  # Distance between point and B
+            ab = sqrt((a.x - b.x) ** 2 + (a.y - b.y) ** 2)  # Distance between A and B
 
-            if AP + PB == AB:
+            if ap + pb == ab:
                 # The point is on the boundary
                 boundary = not boundary
                 continue
 
         return boundary
 
-class Square(Polygon): ## MBR CLASS ##
 
+class Square(Polygon):
+    # MBR Class #
     def __init__(self, points):
         super().__init__(points)
 
-    def basic_mbr(self):  # source: https://stackoverflow.com/questions/20808393/python-defining-a-minimum-bounding-rectangle
+    def basic_mbr(self):
 
         min_x, min_y = 100000, 100000  # start with something much higher than expected min
         max_x, max_y = -100000, -100000  # start with something much lower than expected max

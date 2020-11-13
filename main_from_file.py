@@ -1,10 +1,11 @@
 from plotter import Plotter
 from pip import Point, Polygon, Square
 
-## https://excalibur.apache.org/framework/best-practices.html
+# https://excalibur.apache.org/framework/best-practices.html
+
 
 def csv_reader(path):
-    with open(path,'r') as f:
+    with open(path, 'r') as f:
         data = f.readlines()[1:]
         points = []
         for line in data:
@@ -13,12 +14,14 @@ def csv_reader(path):
             points.append(res)
         return points
 
-def csv_writer(list):
+
+def csv_writer(file):
     header = ['id', 'category']
     with open('write_output.csv', 'w') as f:
         f.write(str(header).translate({39: None})[1:-1] + '\n')
-        for line in list:
+        for line in file:
             f.write(str(line).translate({39: None})[1:-1] + '\n')
+
 
 def transpose_matrix(matrix):
     res = []
@@ -39,8 +42,6 @@ def main():
     # Extract X's and Y's for plotter inputs
     poly_x = [i[1] for i in poly_list]
     poly_y = [i[2] for i in poly_list]
-    input_x = [i[1] for i in input_list]
-    input_y = [i[2] for i in input_list]
 
     # Convert lists into Point objects
     poly_p = []
@@ -60,11 +61,11 @@ def main():
     ''' Get MBR results '''
 
     # Extract MBR outputs
-    mbr_id = [i.id for i in input_p]
+    mbr_id = [i.name for i in input_p]
     mbr_x = [i.x for i in input_p]
     mbr_y = [i.y for i in input_p]
     mbr_out = [s.get_mbr(i) for i in input_p]
-    mbr_out = [item for l in mbr_out for item in l]
+    mbr_out = [item for i in mbr_out for item in i]
     mbr_res = transpose_matrix([mbr_id, mbr_x, mbr_y, mbr_out])
     print('MBR Results: ', mbr_res)
 
@@ -87,7 +88,7 @@ def main():
     ''' Get BOUNDARY results '''
 
     # Extract Boundary outputs from points inside mbr
-    bound_id = [i.id for i in in_mbr]
+    bound_id = [i.name for i in in_mbr]
     bound_x = [i.x for i in in_mbr]
     bound_y = [i.y for i in in_mbr]
     bound_out = [p.bound(i) for i in in_mbr]
@@ -95,7 +96,7 @@ def main():
     # Categorise points on/off polygon boundaries
     bound_res = []
     for i in bound_out:
-        if i == True:
+        if i is True:
             bound_res.append('boundary')
         else:
             bound_res.append('n/a')
@@ -136,13 +137,13 @@ def main():
     ''' Get RCA results '''
 
     # Extract RCA outputs from points not on the boundary and inside the mbr
-    rca_id = [i.id for i in off_bound]
+    rca_id = [i.name for i in off_bound]
     rca_x = [i.x for i in off_bound]
     rca_y = [i.y for i in off_bound]
     rca_out = [p.contains(i) for i in off_bound]
     rca_res = []
     for i in rca_out:
-        if i == True:
+        if i is True:
             rca_res.append('inside')
         else:
             rca_res.append('outside')
@@ -169,17 +170,17 @@ def main():
     final = []
     for p in input_p:
         for i in mbr_out:
-            if p.id == i[0]:
+            if p.name == i[0]:
                 final.append(i)
             else:
                 continue
         for i in bound_on:
-            if p.id == i[0]:
+            if p.name == i[0]:
                 final.append(i)
             else:
                 continue
         for i in rca_in:
-            if p.id == i[0]:
+            if p.name == i[0]:
                 final.append(i)
 
     final_plot = transpose_matrix(final)
@@ -205,4 +206,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
