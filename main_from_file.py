@@ -1,7 +1,8 @@
 from plotter import Plotter
 from pip import Point, Polygon, Square
 
-# https://excalibur.apache.org/framework/best-practices.html
+# Sources:
+# Transpose Matrix: https://www.programiz.com/python-programming/examples/transpose-matrix
 
 
 def csv_reader(path):
@@ -193,12 +194,10 @@ def main():
 
     print("write output.csv", write_output)
 
-    print("plot polygon and points")
-
     ''' Plot points '''
 
+    print("plot polygon and points")
     plotter.add_polygon(poly_x, poly_y)
-    # plotter.add_point(bound_x, bound_y)
     for x, y, label in zip(final_plot[1], final_plot[2], final_plot[3]):
         plotter.add_point(x, y, kind=label)
     plotter.show()

@@ -1,10 +1,9 @@
 import sys
 
-# Sources
+# Sources:
 # MBR: https://stackoverflow.com/questions/20808393/python-defining-a-minimum-bounding-rectangle
 # RCA: https://rosettacode.org/wiki/Ray-casting_algorithm#Python
 # RCA: http://philliplemons.com/posts/ray-casting-algorithm
-# Transpose Matrix: https://www.programiz.com/python-programming/examples/transpose-matrix
 
 
 def sqrt(n):
@@ -44,7 +43,7 @@ class Polygon:
 
         inside = False
         for edge in self.edges():
-            # A needs to be the lower point of the edge
+            # Edge A needs to be the lower point of the edge
             a, b = edge[0], edge[1]
             if a.y > b.y:
                 a, b = b, a
