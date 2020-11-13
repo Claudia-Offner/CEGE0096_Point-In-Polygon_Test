@@ -3,7 +3,7 @@ from pip import Point, Polygon, Square
 
 ## https://excalibur.apache.org/framework/best-practices.html
 
-def coord_reader(path):
+def csv_reader(path):
     with open(path,'r') as f:
         data = f.readlines()[1:]
         points = []
@@ -12,6 +12,13 @@ def coord_reader(path):
             res = [float(i) for i in res]
             points.append(res)
         return points
+
+def csv_writer(list):
+    header = ['id', 'category']
+    with open('write_output.csv', 'w') as f:
+        f.write(str(header).translate({39: None})[1:-1] + '\n')
+        for line in list:
+            f.write(str(line).translate({39: None})[1:-1] + '\n')
 
 def transpose_matrix(matrix):
     res = []
@@ -24,9 +31,9 @@ def transpose_matrix(matrix):
 def main():
 
     # Read data for analysis
-    poly_list = coord_reader('polygon.csv')
+    poly_list = csv_reader('polygon.csv')
     print("read polygon.csv", poly_list)
-    input_list = coord_reader('input.csv')
+    input_list = csv_reader('input.csv')
     print("read input.csv", input_list)
 
     # Extract X's and Y's for plotter inputs
@@ -152,9 +159,8 @@ def main():
             rca_out.append(i)
             continue
 
-    '''
-    Categorise data outputs
-    '''
+    ''' Categorise data outputs '''
+
     # Combine points outside the RCA with points outside the MBR
     for i in rca_out:
         mbr_out.append(i)
@@ -180,19 +186,16 @@ def main():
 
     print("categorize points", final)
 
-    # final_output = transpose_matrix([final_plot[0], final_plot[3]])
-    #
-    # with open('practice.csv', 'w') as f:
-    #     for line in final_output:
-    #         f.write(str(line)[1:-1] + '\n')
+    # Optimise category outputs for file export
+    write_output = transpose_matrix([[int(i) for i in final_plot[0]], final_plot[3]])
+    csv_writer(write_output)
 
-
-    print("write output.csv")
+    print("write output.csv", write_output)
 
     print("plot polygon and points")
-    '''
-    Plot points
-    '''
+
+    ''' Plot points '''
+
     plotter.add_polygon(poly_x, poly_y)
     # plotter.add_point(bound_x, bound_y)
     for x, y, label in zip(final_plot[1], final_plot[2], final_plot[3]):
