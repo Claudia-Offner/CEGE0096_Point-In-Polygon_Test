@@ -43,7 +43,7 @@ def main():
     poly_x = [i[1] for i in poly_list]
     poly_y = [i[2] for i in poly_list]
 
-    # Convert lists into Point objects
+    # Convert inputs into Point objects
     poly_p = []
     for i in poly_list:
         point = Point(i[0], i[1], i[2])
