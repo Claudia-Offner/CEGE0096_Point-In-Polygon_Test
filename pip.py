@@ -1,5 +1,11 @@
 import sys
 
+## Sources
+## MBR: https://stackoverflow.com/questions/20808393/python-defining-a-minimum-bounding-rectangle
+## RCA: https://rosettacode.org/wiki/Ray-casting_algorithm#Python
+## RCA: http://philliplemons.com/posts/ray-casting-algorithm
+## Transpose Matrix: https://www.programiz.com/python-programming/examples/transpose-matrix
+
 def sqrt(n):
   if n < 0:
     return

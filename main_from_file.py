@@ -1,11 +1,6 @@
 from plotter import Plotter
 from pip import Point, Polygon, Square
 
-## Sources
-## MBR: https://stackoverflow.com/questions/20808393/python-defining-a-minimum-bounding-rectangle
-## RCA: https://rosettacode.org/wiki/Ray-casting_algorithm#Python
-## RCA: http://philliplemons.com/posts/ray-casting-algorithm
-## Transpose Matrix: https://www.programiz.com/python-programming/examples/transpose-matrix
 ## https://excalibur.apache.org/framework/best-practices.html
 
 def coord_reader(path):
