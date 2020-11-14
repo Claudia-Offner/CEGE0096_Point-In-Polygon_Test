@@ -4,6 +4,7 @@ import sys
 # MBR: https://stackoverflow.com/questions/20808393/python-defining-a-minimum-bounding-rectangle
 # RCA: https://rosettacode.org/wiki/Ray-casting_algorithm#Python
 # RCA: http://philliplemons.com/posts/ray-casting-algorithm
+# Boundary: https://stackoverflow.com/questions/328107/how-can-you-determine-a-point-is-between-two-other-points-on-a-line-segment
 
 
 def sqrt(n):

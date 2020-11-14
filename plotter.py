@@ -37,3 +37,6 @@ class Plotter:
         by_label = OrderedDict(zip(labels, handles))
         plt.legend(by_label.values(), by_label.keys())
         plt.show()
+
+    def close(self):
+        plt.clf()

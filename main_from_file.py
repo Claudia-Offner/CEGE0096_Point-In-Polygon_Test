@@ -194,24 +194,33 @@ def main():
 
     print('Categorize points: ', final)
 
+    ''' PLOT POINTS '''
+
     # Optimise category outputs for file export
     write_output = transpose_matrix([[int(i) for i in final_plot[0]], final_plot[3]])
     csv_writer(write_output)
 
     print('Write output.csv: ', write_output)
 
-    ''' PLOT POINTS '''
-
     print('Plot polygon and points')
 
-    # Plot Polygon shape
+    # Plot MBR results
+    mbr_line = s.mbr_box()
+    mbr_line.append(mbr_line[0])
+    mbr_line = transpose_matrix(mbr_line)
+    mbr_res = transpose_matrix(mbr_res)
     plotter.add_polygon(poly_x, poly_y)
+    plotter.add_line(mbr_line[0], mbr_line[1], 'MBR')
+    for x, y, label in zip(mbr_res[1], mbr_res[2], mbr_res[3]):
+        plotter.add_point(x, y, kind=label)
+    plotter.add_label('X-axis', 'Y-axis', 'Minimum Boundary Rectangle')
+    # plotter.show()
+    plotter.close()
 
-    # Plot categorised points
+    # Plot Plot final results
+    plotter.add_polygon(poly_x, poly_y)
     for x, y, label in zip(final_plot[1], final_plot[2], final_plot[3]):
         plotter.add_point(x, y, kind=label)
-
-    # Add labels & Show
     plotter.add_label('X-axis', 'Y-axis', 'Point in Polygon Test')
     plotter.show()
 

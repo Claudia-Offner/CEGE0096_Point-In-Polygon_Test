@@ -200,14 +200,10 @@ def main():
 
     ''' Plot points '''
 
-    # Plot Polygon shape
+    # Plot Plot final results
     plotter.add_polygon(poly_x, poly_y)
-
-    # Plot categorised points
     for x, y, label in zip(final_plot[1], final_plot[2], final_plot[3]):
         plotter.add_point(x, y, kind=label)
-
-    # Add labels & Show
     plotter.add_label('X-axis', 'Y-axis', 'Point in Polygon Test')
     plotter.show()
 
