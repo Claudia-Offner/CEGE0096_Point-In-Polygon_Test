@@ -36,15 +36,15 @@ def main():
 
     # Read data for analysis
     poly_list = csv_reader('polygon.csv')
-    print("read polygon.csv", poly_list)
+    print('Read polygon.csv: ', poly_list)
     input_list = csv_reader('input.csv')
-    print("read input.csv", input_list)
+    print('Read input.csv: ', input_list)
 
     # Extract X's and Y's for plotter inputs
     poly_x = [i[1] for i in poly_list]
     poly_y = [i[2] for i in poly_list]
 
-    # Convert inputs into Point objects
+    # Convert polygon and inputs into Point objects
     poly_p = []
     for i in poly_list:
         point = Point(i[0], i[1], i[2])
@@ -161,6 +161,12 @@ def main():
             rca_out.append(i)
             continue
 
+    # Create Point object for points not on boundary (for RCA analysis)
+    in_rca = []
+    for i in rca_in:
+        point = Point(i[0], i[1], i[2])
+        in_rca.append(point)
+
     ''' Categorise data outputs '''
 
     # Combine points outside the RCA with points outside the MBR
@@ -186,22 +192,29 @@ def main():
 
     final_plot = transpose_matrix(final)
 
-    print("categorize points", final)
+    print('Categorize points: ', final)
 
     # Optimise category outputs for file export
     write_output = transpose_matrix([[int(i) for i in final_plot[0]], final_plot[3]])
     csv_writer(write_output)
 
-    print("write output.csv", write_output)
+    print('Write output.csv: ', write_output)
 
-    ''' Plot points '''
+    ''' PLOT POINTS '''
 
-    print("plot polygon and points")
+    print('Plot polygon and points')
+
+    # Plot Polygon shape
     plotter.add_polygon(poly_x, poly_y)
+
+    # Plot categorised points
     for x, y, label in zip(final_plot[1], final_plot[2], final_plot[3]):
         plotter.add_point(x, y, kind=label)
+
+    # Add labels & Show
+    plotter.add_label('X-axis', 'Y-axis', 'Point in Polygon Test')
     plotter.show()
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     main()

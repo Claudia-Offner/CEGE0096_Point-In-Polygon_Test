@@ -36,21 +36,22 @@ def main():
 
     # Read data for analysis
     poly_list = csv_reader('polygon.csv')
-    print("read polygon.csv", poly_list)
+    print('Read polygon.csv: ', poly_list)
 
     # Extract X's and Y's for plotter inputs
     poly_x = [i[1] for i in poly_list]
     poly_y = [i[2] for i in poly_list]
 
-    print("Insert point information")
-    x1 = float(input("x coordinate: "))
-    y1 = float(input("y coordinate: "))
+    # Get user inputs
+    print('Insert point information')
+    x1 = float(input('x coordinate: '))
+    y1 = float(input('y coordinate: '))
 
     print("Insert point information")
-    x2 = float(input("x coordinate: "))
-    y2 = float(input("y coordinate: "))
+    x2 = float(input('x coordinate: '))
+    y2 = float(input('y coordinate: '))
 
-    # Convert inputs into Point objects
+    # Convert polygon and inputs into Point objects
     poly_p = []
     for i in poly_list:
         point = Point(i[0], i[1], i[2])
@@ -73,7 +74,7 @@ def main():
     mbr_res = transpose_matrix([mbr_id, mbr_x, mbr_y, mbr_out])
     print('MBR Results: ', mbr_res)
 
-    # Separate inside & outside MBR points
+    # Separate points inside & outside MBR
     mbr_in = []
     mbr_out = []
     for i in mbr_res:
@@ -189,22 +190,27 @@ def main():
 
     final_plot = transpose_matrix(final)
 
-    print("categorize points", final)
+    print('Categorize points: ', final)
 
     # Optimise category outputs for file export
     write_output = transpose_matrix([[int(i) for i in final_plot[0]], final_plot[3]])
     csv_writer(write_output)
 
-    print("write output.csv", write_output)
+    print('Write output.csv: ', write_output)
 
     ''' Plot points '''
 
-    print("plot polygon and point")
+    # Plot Polygon shape
     plotter.add_polygon(poly_x, poly_y)
+
+    # Plot categorised points
     for x, y, label in zip(final_plot[1], final_plot[2], final_plot[3]):
         plotter.add_point(x, y, kind=label)
+
+    # Add labels & Show
+    plotter.add_label('X-axis', 'Y-axis', 'Point in Polygon Test')
     plotter.show()
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     main()
