@@ -1,0 +1,215 @@
+commit 01f14926dd93095ff40548394c1d5317babdd290
+Author: ucesccf <ucesccf@ucl.ac.uk>
+Date:   Sat Nov 14 12:40:48 2020 +0000
+
+    Added a plot for MBR results. Added a close method to plotter to close mbr plot.
+
+commit 29a525e29931672ca8d82f9810ec56b05efe28f5
+Author: ucesccf <ucesccf@ucl.ac.uk>
+Date:   Sat Nov 14 10:44:16 2020 +0000
+
+    Add_line and Add_label methods were added to plotter class. Pseudo code updated. Project is finished.
+
+commit 27531002b242d0662a76e94d3b7e4092f03a2991
+Author: ucesccf <ucesccf@ucl.ac.uk>
+Date:   Fri Nov 13 12:18:43 2020 +0000
+
+    First draft of code complete. There should be no more major adjustments.
+
+commit 61dd6abda10d0d952fc1daa32774e46a1756d7b6
+Author: ucesccf <ucesccf@ucl.ac.uk>
+Date:   Fri Nov 13 12:08:36 2020 +0000
+
+    Code applied to 'main_from_user.py' file and checked for PEP8.
+
+commit aa239786b091fb4a0a6d3795b789d26e48b50c88
+Author: ucesccf <ucesccf@ucl.ac.uk>
+Date:   Fri Nov 13 11:47:23 2020 +0000
+
+    Code checked for PEP8.
+
+commit be6dcf26c10baece2eac72a36f0d2648038ecc98
+Author: ucesccf <ucesccf@ucl.ac.uk>
+Date:   Fri Nov 13 11:18:40 2020 +0000
+
+    'csv_writer' function added. Need to add plot design elements. Code still needs to be checked for OOP and PEP8.
+
+commit 22f97efed9a374d63586781e58c224b0e435da40
+Author: ucesccf <ucesccf@ucl.ac.uk>
+Date:   Fri Nov 13 10:32:04 2020 +0000
+
+    Classes have been placed in 'pip.py' file to be imported into 'main_from_file.py' and 'main_from_user.py'.
+
+commit 37642f589f84dba665607d5026b4f7e466897431
+Author: ucesccf <ucesccf@ucl.ac.uk>
+Date:   Fri Nov 13 10:31:31 2020 +0000
+
+    Classes have been placed in 'pip.py' file to be imported into 'main_from_file.py' and 'main_from_user.py'.
+
+commit 933ac662859e23348a35967a52849fe34cbe4835
+Author: ucesccf <ucesccf@ucl.ac.uk>
+Date:   Thu Nov 12 10:28:35 2020 +0000
+
+    All points have been correctly categorised and the problem is solved. Code needs to be optimised for PEP 8.
+
+commit b0abc61e72074bebd933898e0dbec6dcd754e2e2
+Author: ucesccf <ucesccf@ucl.ac.uk>
+Date:   Thu Nov 12 09:54:56 2020 +0000
+
+    Added vertex checker. All boundaries are now correctly identified.
+
+commit e7bc2021e992448ba86b53ff26a5f7bb8a46112e
+Author: ucesccf <ucesccf@ucl.ac.uk>
+Date:   Wed Nov 11 17:10:18 2020 +0000
+
+    Re-arrangement, no real changes.
+
+commit b63c78ee327c17885f620f106a74d6ec62b84e3a
+Author: ucesccf <ucesccf@ucl.ac.uk>
+Date:   Wed Nov 11 16:10:02 2020 +0000
+
+    Sucessfully ran boundary class and RCA class. There are 7 vertex points that need to be checked for.
+
+commit 7206034e86ed084b0302e7b4fc92ccad28e48728
+Author: ucesccf <ucesccf@ucl.ac.uk>
+Date:   Wed Nov 11 16:04:25 2020 +0000
+
+    Sucessfully ran boundary class. There are some vertex points that are not accounted for.
+
+commit 3e3a653492321824027685703ccf317779d20c7b
+Author: ucesccf <ucesccf@ucl.ac.uk>
+Date:   Wed Nov 11 14:23:55 2020 +0000
+
+    Updated code. Boundary class still not working.
+
+commit ec0abd4fef2ed55a888a9fda921c338e1c66736b
+Author: ucesccf <ucesccf@ucl.ac.uk>
+Date:   Wed Nov 11 13:36:10 2020 +0000
+
+    Reorganised code.
+
+commit 1964fbe25ce0aa368887b981eab833baabb26575
+Author: ucesccf <ucesccf@ucl.ac.uk>
+Date:   Tue Nov 10 17:55:38 2020 +0000
+
+    First attempt at fixing Point class problem. Debugging needed at line 82 in main_from_file.py.
+
+commit 1293295dd91f1a5161d6206382090d60e2493933
+Author: ucesccf <ucesccf@ucl.ac.uk>
+Date:   Tue Nov 10 15:57:11 2020 +0000
+
+    Code solution components mostly complete. Code needs to be reorganised.
+
+commit f6db6f7daf38eeefee524b15ec7db0f90f5f5179
+Author: ucesccf <ucesccf@ucl.ac.uk>
+Date:   Tue Nov 10 11:51:57 2020 +0000
+
+    Added counters to 'inside' and 'bound' methods. Math for 'bound' method still needs work.
+
+commit bfa1e9bdb5426413b2a0d26a5a93eaac17e071ba
+Author: ucesccf <ucesccf@ucl.ac.uk>
+Date:   Mon Nov 9 18:17:04 2020 +0000
+
+    Fixed math for boundary method. Need to adapt code.
+
+commit 9f9e5a90e8c966cd0b1d146faf70f5863f235830
+Author: ucesccf <ucesccf@ucl.ac.uk>
+Date:   Mon Nov 9 12:56:32 2020 +0000
+
+    Attempt at checking point-on-line equations against mbr. Error messages for mbr class need to be addressed.
+
+commit 72aeb990c3f1cc4815540ebe0e544bc67cdd6500
+Author: ucesccf <ucesccf@ucl.ac.uk>
+Date:   Mon Nov 9 10:14:42 2020 +0000
+
+    Updated category counter to include boundary. Boundary classifier still faulty.
+
+commit 14d8621520f9f7224655136316e4928ecc8e938e
+Author: ucesccf <ucesccf@ucl.ac.uk>
+Date:   Sun Nov 8 18:31:58 2020 +0000
+
+    First part of boundary identifier added to polygon class
+
+commit 3521a74e6581baf8462124da988971a35a1f8ab6
+Author: ucesccf <ucesccf@ucl.ac.uk>
+Date:   Sun Nov 8 17:55:20 2020 +0000
+
+    Successfully plotted points according to RCA. Need to categorise boundaries and vertices.
+
+commit 3da441c1b948fe22e0a52afda30323fffe1a1eea
+Author: ucesccf <ucesccf@ucl.ac.uk>
+Date:   Sun Nov 8 17:26:35 2020 +0000
+
+    Sucessfully ran RCA over input_points. Need to count plot and plot outputs.
+
+commit c77eae08ad8acf0071858fee8c38f2e97e5aa8eb
+Author: ucesccf <ucesccf@ucl.ac.uk>
+Date:   Sun Nov 8 17:12:39 2020 +0000
+
+    Made MBR test into a class. Ran successfully.
+
+commit 748d87490667304791e3bbe7a93e8587a824e845
+Author: ucesccf <ucesccf@ucl.ac.uk>
+Date:   Sun Nov 8 12:51:45 2020 +0000
+
+    Plotted RCA test for a single given point.
+
+commit 9089998dc29dd824ef48c1fdae71c36665b9d622
+Author: ucesccf <ucesccf@ucl.ac.uk>
+Date:   Sun Nov 8 12:21:39 2020 +0000
+
+    RCA test for a single given point. Now need to iterate the test over a list of points.
+
+commit e3af5f88c0310ca763a9336bca7e1f0d03fd65e8
+Author: ucesccf <ucesccf@ucl.ac.uk>
+Date:   Sat Nov 7 14:53:24 2020 +0000
+
+    RCA as a class. Need to make contain method iterable.
+
+commit abc4b6ed533c24fee1cba20a429c88ade2ceded7
+Author: ucesccf <ucesccf@ucl.ac.uk>
+Date:   Sat Nov 7 12:20:38 2020 +0000
+
+    First attempt at RCA.
+
+commit 96dec48edda1331848022fc3d1dabfc2f3d6e616
+Author: ucesccf <ucesccf@ucl.ac.uk>
+Date:   Sat Nov 7 10:20:32 2020 +0000
+
+    Categorised points according to MBR. Created transpose matrix. Updated draft.py with class/function ideas.
+
+commit f4a130acb1b66c4d456784d981f81b1c4bdf474c
+Author: ucesccf <ucesccf@ucl.ac.uk>
+Date:   Fri Nov 6 18:50:33 2020 +0000
+
+    First attempt at MBR.
+
+commit 572e20e7783c6fc5153707da4aba71ccd289040a
+Author: ucesccf <ucesccf@ucl.ac.uk>
+Date:   Fri Nov 6 18:14:18 2020 +0000
+
+    Created file for functions and OOP development
+
+commit c5affa46f985684244b12b1b0be28f11e205a4ab
+Author: ucesccf <ucesccf@ucl.ac.uk>
+Date:   Fri Nov 6 18:00:23 2020 +0000
+
+    Read csv files as points and in separate x and y lists. First plot using plotter.
+
+commit c1586433f947c64b73ec97c52484433547847852
+Author: ucesccf <ucesccf@ucl.ac.uk>
+Date:   Thu Nov 5 18:27:39 2020 +0000
+
+    First attempt at importing polygon.csv and input.csv into usable lists
+
+commit f81f5da224b286e80e4bfd2ff17361d4bb84420f
+Author: ucesccf <ucesccf@ucl.ac.uk>
+Date:   Thu Nov 5 17:03:39 2020 +0000
+
+    Added Pseudocode for main_from_file.py
+
+commit d5f403bc3d959758304d314fe1b8ecfec7241d52
+Author: ucesccf <ucesccf@ucl.ac.uk>
+Date:   Thu Nov 5 17:01:25 2020 +0000
+
+    Loaded project template

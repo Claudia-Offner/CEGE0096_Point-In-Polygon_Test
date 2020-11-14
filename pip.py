@@ -5,6 +5,7 @@ import sys
 # RCA: https://rosettacode.org/wiki/Ray-casting_algorithm#Python
 # RCA: http://philliplemons.com/posts/ray-casting-algorithm
 # Boundary: https://stackoverflow.com/questions/328107/how-can-you-determine-a-point-is-between-two-other-points-on-a-line-segment
+# Transpose Matrix: https://www.programiz.com/python-programming/examples/transpose-matrix
 
 
 def sqrt(n):

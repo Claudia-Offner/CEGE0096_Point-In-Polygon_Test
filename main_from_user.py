@@ -1,9 +1,6 @@
 from plotter import Plotter
 from pip import Point, Polygon, Square
 
-# Sources:
-# Transpose Matrix: https://www.programiz.com/python-programming/examples/transpose-matrix
-
 
 def csv_reader(path):
     with open(path, 'r') as f:
@@ -18,7 +15,7 @@ def csv_reader(path):
 
 def csv_writer(file):
     header = ['id', 'category']
-    with open('write_output.csv', 'w') as f:
+    with open('original_output.csv', 'w') as f:
         f.write(str(header).translate({39: None})[1:-1] + '\n')
         for line in file:
             f.write(str(line).translate({39: None})[1:-1] + '\n')
@@ -192,13 +189,13 @@ def main():
 
     print('Categorize points: ', final)
 
+    ''' Plot points '''
+
     # Optimise category outputs for file export
     write_output = transpose_matrix([[int(i) for i in final_plot[0]], final_plot[3]])
     csv_writer(write_output)
 
     print('Write output.csv: ', write_output)
-
-    ''' Plot points '''
 
     # Plot Plot final results
     plotter.add_polygon(poly_x, poly_y)
