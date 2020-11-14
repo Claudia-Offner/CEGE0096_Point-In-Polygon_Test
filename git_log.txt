@@ -1,3 +1,34 @@
+commit 640a79d6e71b1a8f0b431f4e4f43166739f77513
+Merge: 6c5e296 96c9b2c
+Author: ucesccf <ucesccf@ucl.ac.uk>
+Date:   Sat Nov 14 13:49:21 2020 +0000
+
+    Merge remote-tracking branch 'origin/master'
+
+commit 6c5e29699548a4f18c46b4a9b5213c7e8ff9db70
+Author: ucesccf <ucesccf@ucl.ac.uk>
+Date:   Sat Nov 14 13:42:33 2020 +0000
+
+    Deleted .idea folder
+
+commit 96c9b2c706e8863d2f01c2b0542827d0d6bf6742
+Author: ucesccf <72859960+ucesccf@users.noreply.github.com>
+Date:   Sat Nov 14 13:39:59 2020 +0000
+
+    Delete .gitignore
+
+commit 58fe97d65c1ee530b889868947e9f6b80329a4dd
+Author: ucesccf <72859960+ucesccf@users.noreply.github.com>
+Date:   Sat Nov 14 13:39:53 2020 +0000
+
+    Delete CEGE0096_20198829.iml
+
+commit 4dc792da23ac18c3cc74547bc740fc7ae0556602
+Author: ucesccf <72859960+ucesccf@users.noreply.github.com>
+Date:   Sat Nov 14 13:36:44 2020 +0000
+
+    Create README.md file
+
 commit f6db3e6b9d75d16bf8d77438905a1adea2ed7a5a
 Author: ucesccf <ucesccf@ucl.ac.uk>
 Date:   Sat Nov 14 13:15:22 2020 +0000
