@@ -1,0 +1,541 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="BranchesTreeState">
+    <expand />
+    <select />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="30e0fac0-9473-4709-985f-be1c1aa987d2" name="Default Changelist" comment="Project finished">
+      <change beforePath="$PROJECT_DIR$/git_log.txt" beforeDir="false" afterPath="$PROJECT_DIR$/git_log.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main_from_file.py" beforeDir="false" afterPath="$PROJECT_DIR$/main_from_file.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main_from_user.py" beforeDir="false" afterPath="$PROJECT_DIR$/main_from_user.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pip.py" beforeDir="false" afterPath="$PROJECT_DIR$/pip.py" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="JupyterTrust" id="e6b56c7a-56ae-4fe8-9b59-8c0607f14720" />
+  <component name="ProjectId" id="1jsacouLKozWmmvCfmqoXNXVmgf" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="settings.editor.selected.configurable" value="ssh.settings" />
+  </component>
+  <component name="RunManager">
+    <configuration name="main_from_file" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/main_from_file.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Python.main_from_file" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="30e0fac0-9473-4709-985f-be1c1aa987d2" name="Default Changelist" comment="" />
+      <created>1604595335062</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1604595335062</updated>
+      <workItem from="1604595336162" duration="5542000" />
+      <workItem from="1604659736593" duration="15323000" />
+      <workItem from="1604677903304" duration="10752000" />
+      <workItem from="1604739024699" duration="18012000" />
+      <workItem from="1604824965037" duration="28478000" />
+      <workItem from="1604910786905" duration="20295000" />
+      <workItem from="1604997655366" duration="25425000" />
+      <workItem from="1605089077510" duration="25570000" />
+      <workItem from="1605172050176" duration="5328000" />
+      <workItem from="1605259747887" duration="9239000" />
+      <workItem from="1605269216318" duration="9352000" />
+      <workItem from="1605299395429" duration="220000" />
+      <workItem from="1605345256383" duration="12485000" />
+      <workItem from="1605431848852" duration="1720000" />
+    </task>
+    <task id="LOCAL-00001" summary="Loaded project template">
+      <created>1604595685704</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1604595685704</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Added Pseudocode for main_from_file.py">
+      <created>1604595819195</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1604595819195</updated>
+    </task>
+    <task id="LOCAL-00003" summary="First attempt at importing polygon.csv and input.csv into usable lists">
+      <created>1604600860142</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1604600860142</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Read csv files as points and in separate x and y lists. First plot using plotter.">
+      <created>1604685624035</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1604685624035</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Created file for functions and OOP development">
+      <created>1604686458542</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1604686458542</updated>
+    </task>
+    <task id="LOCAL-00006" summary="First attempt at MBR.">
+      <created>1604688633601</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1604688633601</updated>
+    </task>
+    <task id="LOCAL-00007" summary="Categorised points according to MBR. Created transpose matrix. Updated draft.py with class/function ideas.">
+      <created>1604744432919</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1604744432919</updated>
+    </task>
+    <task id="LOCAL-00008" summary="First attempt at RCA.">
+      <created>1604751638204</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1604751638204</updated>
+    </task>
+    <task id="LOCAL-00009" summary="RCA as a class. Need to make contain method iterable.">
+      <created>1604760804619</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1604760804619</updated>
+    </task>
+    <task id="LOCAL-00010" summary="RCA test for a single given point. Now need to iterate the test over a list of points.">
+      <created>1604838100098</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1604838100098</updated>
+    </task>
+    <task id="LOCAL-00011" summary="Plotted RCA test for a single given point.">
+      <created>1604839906019</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1604839906019</updated>
+    </task>
+    <task id="LOCAL-00012" summary="Made MBR test into a class. Ran successfully.">
+      <created>1604855559771</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1604855559771</updated>
+    </task>
+    <task id="LOCAL-00013" summary="Sucessfully ran RCA over input_points. Need to count plot and plot outputs.">
+      <created>1604856395883</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1604856395884</updated>
+    </task>
+    <task id="LOCAL-00014" summary="Successfully plotted points according to RCA. Need to categorise boundaries and vertices.">
+      <created>1604858120949</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1604858120949</updated>
+    </task>
+    <task id="LOCAL-00015" summary="First part of boundary identifier added to polygon class">
+      <created>1604860318870</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1604860318870</updated>
+    </task>
+    <task id="LOCAL-00016" summary="Updated category counter to include boundary. Boundary classifier still faulty.">
+      <created>1604916882377</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1604916882377</updated>
+    </task>
+    <task id="LOCAL-00017" summary="Attempt at checking point-on-line equations against mbr. Error messages for mbr class need to be addressed.">
+      <created>1604926592162</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1604926592162</updated>
+    </task>
+    <task id="LOCAL-00018" summary="Fixed math for boundary method. Need to adapt code.">
+      <created>1604945824318</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1604945824318</updated>
+    </task>
+    <task id="LOCAL-00019" summary="Added counters to 'inside' and 'bound' methods. Math for 'bound' method still needs work.">
+      <created>1605009117252</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1605009117252</updated>
+    </task>
+    <task id="LOCAL-00020" summary="Code solution components mostly complete. Code needs to be reorganised.">
+      <created>1605023831756</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1605023831756</updated>
+    </task>
+    <task id="LOCAL-00021" summary="First attempt at fixing Point class problem. Debugging needed at line 82 in main_from_file.py.">
+      <created>1605030938297</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1605030938297</updated>
+    </task>
+    <task id="LOCAL-00022" summary="Reorganised code.">
+      <created>1605101770901</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1605101770901</updated>
+    </task>
+    <task id="LOCAL-00023" summary="Updated code. Boundary class still not working.">
+      <created>1605104635537</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1605104635537</updated>
+    </task>
+    <task id="LOCAL-00024" summary="Sucessfully ran boundary class. There are some vertex points that are not accounted for.">
+      <created>1605110666005</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1605110666005</updated>
+    </task>
+    <task id="LOCAL-00025" summary="Sucessfully ran boundary class and RCA class. There are 7 vertex points that need to be checked for.">
+      <created>1605111002638</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1605111002638</updated>
+    </task>
+    <task id="LOCAL-00026" summary="Re-arrangement, no real changes.">
+      <created>1605114618736</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1605114618736</updated>
+    </task>
+    <task id="LOCAL-00027" summary="Added vertex checker. All boundaries are now correctly identified.">
+      <created>1605174896726</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1605174896726</updated>
+    </task>
+    <task id="LOCAL-00028" summary="All points have been correctly categorised and the problem is solved. Code needs to be optimised for PEP 8.">
+      <created>1605176915378</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1605176915378</updated>
+    </task>
+    <task id="LOCAL-00029" summary="Classes have been placed in 'pip.py' file to be imported into 'main_from_file.py' and 'main_from_user.py'.">
+      <created>1605263491791</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1605263491791</updated>
+    </task>
+    <task id="LOCAL-00030" summary="Classes have been placed in 'pip.py' file to be imported into 'main_from_file.py' and 'main_from_user.py'.">
+      <created>1605263524104</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1605263524104</updated>
+    </task>
+    <task id="LOCAL-00031" summary="'csv_writer' function added. Need to add plot design elements. Code still needs to be checked for OOP and PEP8.">
+      <created>1605266320073</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1605266320073</updated>
+    </task>
+    <task id="LOCAL-00032" summary="Code checked for PEP8.">
+      <created>1605268043749</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1605268043749</updated>
+    </task>
+    <task id="LOCAL-00033" summary="Code applied to 'main_from_user.py' file and checked for PEP8.">
+      <created>1605269316749</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1605269316749</updated>
+    </task>
+    <task id="LOCAL-00034" summary="First draft of code complete. There should be no more major adjustments.">
+      <created>1605269923492</created>
+      <option name="number" value="00034" />
+      <option name="presentableId" value="LOCAL-00034" />
+      <option name="project" value="LOCAL" />
+      <updated>1605269923492</updated>
+    </task>
+    <task id="LOCAL-00035" summary="Add_line and Add_label methods were added to plotter class. Pseudo code updated. Project is finished.">
+      <created>1605350656776</created>
+      <option name="number" value="00035" />
+      <option name="presentableId" value="LOCAL-00035" />
+      <option name="project" value="LOCAL" />
+      <updated>1605350656776</updated>
+    </task>
+    <task id="LOCAL-00036" summary="Added a plot for MBR results. Added a close method to plotter to close mbr plot.">
+      <created>1605357648318</created>
+      <option name="number" value="00036" />
+      <option name="presentableId" value="LOCAL-00036" />
+      <option name="project" value="LOCAL" />
+      <updated>1605357648318</updated>
+    </task>
+    <task id="LOCAL-00037" summary="Project Finished.">
+      <created>1605359660074</created>
+      <option name="number" value="00037" />
+      <option name="presentableId" value="LOCAL-00037" />
+      <option name="project" value="LOCAL" />
+      <updated>1605359660074</updated>
+    </task>
+    <task id="LOCAL-00038" summary="Project Finished.">
+      <created>1605359722062</created>
+      <option name="number" value="00038" />
+      <option name="presentableId" value="LOCAL-00038" />
+      <option name="project" value="LOCAL" />
+      <updated>1605359722062</updated>
+    </task>
+    <task id="LOCAL-00039" summary="Deleted .idea folder">
+      <created>1605361353336</created>
+      <option name="number" value="00039" />
+      <option name="presentableId" value="LOCAL-00039" />
+      <option name="project" value="LOCAL" />
+      <updated>1605361353336</updated>
+    </task>
+    <task id="LOCAL-00040" summary="Project finished">
+      <created>1605361899996</created>
+      <option name="number" value="00040" />
+      <option name="presentableId" value="LOCAL-00040" />
+      <option name="project" value="LOCAL" />
+      <updated>1605361899996</updated>
+    </task>
+    <option name="localTasksCounter" value="41" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="1">
+          <value>
+            <State />
+          </value>
+        </entry>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Successfully plotted points according to RCA. Need to categorise boundaries and vertices." />
+    <MESSAGE value="First part of boundary identifier added to polygon class" />
+    <MESSAGE value="Updated category counter to include boundary. Boundary classifier still faulty." />
+    <MESSAGE value="Attempt at checking point-on-line equations against mbr. Error messages for mbr class need to be addressed." />
+    <MESSAGE value="Fixed math for boundary method. Need to adapt code." />
+    <MESSAGE value="Added counters to 'inside' and 'bound' methods. Math for 'bound' method still needs work." />
+    <MESSAGE value="Code solution components mostly complete. Code needs to be reorganised." />
+    <MESSAGE value="First attempt at fixing Point class problem. Debugging needed at line 82 in main_from_file.py." />
+    <MESSAGE value="Reorganised code." />
+    <MESSAGE value="Updated code. Boundary class still not working." />
+    <MESSAGE value="Sucessfully ran boundary class. There are some vertex points that are not accounted for." />
+    <MESSAGE value="Sucessfully ran boundary class and RCA class. There are 7 vertex points that need to be checked for." />
+    <MESSAGE value="Re-arrangement, no real changes." />
+    <MESSAGE value="Added vertex checker. All boundaries are now correctly identified." />
+    <MESSAGE value="All points have been correctly categorised and the problem is solved. Code needs to be optimised for PEP 8." />
+    <MESSAGE value="Classes have been placed in 'pip.py' file to be imported into 'main_from_file.py' and 'main_from_user.py'." />
+    <MESSAGE value="'csv_writer' function added. Need to add plot design elements. Code still needs to be checked for OOP and PEP8." />
+    <MESSAGE value="Code checked for PEP8." />
+    <MESSAGE value="Code applied to 'main_from_user.py' file and checked for PEP8." />
+    <MESSAGE value="First draft of code complete. There should be no more major adjustments." />
+    <MESSAGE value="Add_line and Add_label methods were added to plotter class. Pseudo code updated. Project is finished." />
+    <MESSAGE value="Added a plot for MBR results. Added a close method to plotter to close mbr plot." />
+    <MESSAGE value="Project Finished." />
+    <MESSAGE value="Deleted .idea folder" />
+    <MESSAGE value="Project finished" />
+    <option name="LAST_COMMIT_MESSAGE" value="Project finished" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="3414" y="0" width="1092" height="1040" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1605432563445">
+      <screen x="3000" y="0" width="1920" height="1040" />
+    </state>
+    <state x="3414" y="0" width="1092" height="1040" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1500.960/3000.0.1920.1040@3000.0.1920.1040" timestamp="1605432563445" />
+    <state x="3690" y="267" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1605350685883">
+      <screen x="3000" y="0" width="1920" height="1040" />
+    </state>
+    <state x="3690" y="267" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1500.960/3000.0.1920.1040@3000.0.1920.1040" timestamp="1605350685883" />
+    <state x="3778" y="427" key="#com.jetbrains.python.refactoring.move.PyMakeFunctionTopLevelDialog" timestamp="1605105364802">
+      <screen x="3000" y="0" width="1920" height="1040" />
+    </state>
+    <state x="3778" y="427" key="#com.jetbrains.python.refactoring.move.PyMakeFunctionTopLevelDialog/0.0.1500.960/3000.0.1920.1040@3000.0.1920.1040" timestamp="1605105364802" />
+    <state x="3729" y="277" key="#com.jetbrains.python.refactoring.move.PyMoveModuleMembersDialog" timestamp="1605024636905">
+      <screen x="3000" y="0" width="1920" height="1040" />
+    </state>
+    <state x="3729" y="277" key="#com.jetbrains.python.refactoring.move.PyMoveModuleMembersDialog/0.0.1500.960/3000.0.1920.1040@3000.0.1920.1040" timestamp="1605024636905" />
+    <state x="3352" y="118" key="DiffContextDialog" timestamp="1605361745716">
+      <screen x="3000" y="0" width="1920" height="1040" />
+    </state>
+    <state x="3352" y="118" key="DiffContextDialog/0.0.1500.960/3000.0.1920.1040@3000.0.1920.1040" timestamp="1605361745716" />
+    <state x="3827" y="275" key="EnvironmentVariablesDialog" timestamp="1605432556411">
+      <screen x="3000" y="0" width="1920" height="1040" />
+    </state>
+    <state x="3827" y="275" key="EnvironmentVariablesDialog/0.0.1500.960/3000.0.1920.1040@3000.0.1920.1040" timestamp="1605432556411" />
+    <state x="3740" y="275" key="FileChooserDialogImpl" timestamp="1605432583695">
+      <screen x="3000" y="0" width="1920" height="1040" />
+    </state>
+    <state x="3740" y="275" key="FileChooserDialogImpl/0.0.1500.960/3000.0.1920.1040@3000.0.1920.1040" timestamp="1605432583695" />
+    <state width="1878" height="175" key="GridCell.Tab.0.bottom" timestamp="1605362732814">
+      <screen x="3000" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1878" height="175" key="GridCell.Tab.0.bottom/0.0.1500.960/3000.0.1920.1040@3000.0.1920.1040" timestamp="1605362732814" />
+    <state width="1458" height="158" key="GridCell.Tab.0.bottom/0.0.1500.960@0.0.1500.960" timestamp="1605299380212" />
+    <state width="1878" height="175" key="GridCell.Tab.0.center" timestamp="1605362732814">
+      <screen x="3000" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1878" height="175" key="GridCell.Tab.0.center/0.0.1500.960/3000.0.1920.1040@3000.0.1920.1040" timestamp="1605362732814" />
+    <state width="1458" height="158" key="GridCell.Tab.0.center/0.0.1500.960@0.0.1500.960" timestamp="1605299380212" />
+    <state width="1878" height="175" key="GridCell.Tab.0.left" timestamp="1605362732814">
+      <screen x="3000" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1878" height="175" key="GridCell.Tab.0.left/0.0.1500.960/3000.0.1920.1040@3000.0.1920.1040" timestamp="1605362732814" />
+    <state width="1458" height="158" key="GridCell.Tab.0.left/0.0.1500.960@0.0.1500.960" timestamp="1605299380211" />
+    <state width="1878" height="175" key="GridCell.Tab.0.right" timestamp="1605362732814">
+      <screen x="3000" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1878" height="175" key="GridCell.Tab.0.right/0.0.1500.960/3000.0.1920.1040@3000.0.1920.1040" timestamp="1605362732814" />
+    <state width="1458" height="158" key="GridCell.Tab.0.right/0.0.1500.960@0.0.1500.960" timestamp="1605299380212" />
+    <state width="1878" height="348" key="GridCell.Tab.1.bottom" timestamp="1605114688664">
+      <screen x="3000" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1878" height="348" key="GridCell.Tab.1.bottom/0.0.1500.960/3000.0.1920.1040@3000.0.1920.1040" timestamp="1605114688664" />
+    <state width="1878" height="348" key="GridCell.Tab.1.center" timestamp="1605114688664">
+      <screen x="3000" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1878" height="348" key="GridCell.Tab.1.center/0.0.1500.960/3000.0.1920.1040@3000.0.1920.1040" timestamp="1605114688664" />
+    <state width="1878" height="348" key="GridCell.Tab.1.left" timestamp="1605114688664">
+      <screen x="3000" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1878" height="348" key="GridCell.Tab.1.left/0.0.1500.960/3000.0.1920.1040@3000.0.1920.1040" timestamp="1605114688664" />
+    <state width="1878" height="348" key="GridCell.Tab.1.right" timestamp="1605114688664">
+      <screen x="3000" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1878" height="348" key="GridCell.Tab.1.right/0.0.1500.960/3000.0.1920.1040@3000.0.1920.1040" timestamp="1605114688664" />
+    <state x="3461" y="165" key="SettingsEditor" timestamp="1605432622769">
+      <screen x="3000" y="0" width="1920" height="1040" />
+    </state>
+    <state x="360" y="152" key="SettingsEditor/0.0.1500.960/3000.0.1920.1040@0.0.1500.960" timestamp="1605345281915" />
+    <state x="3461" y="165" key="SettingsEditor/0.0.1500.960/3000.0.1920.1040@3000.0.1920.1040" timestamp="1605432622769" />
+    <state x="360" y="152" key="SettingsEditor/0.0.1500.960@0.0.1500.960" timestamp="1605287213595" />
+    <state x="3552" y="253" key="Vcs.Push.Dialog.v2" timestamp="1605361911761">
+      <screen x="3000" y="0" width="1920" height="1040" />
+    </state>
+    <state x="3552" y="253" key="Vcs.Push.Dialog.v2/0.0.1500.960/3000.0.1920.1040@3000.0.1920.1040" timestamp="1605361911761" />
+    <state x="4021" y="164" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1604679221479">
+      <screen x="3000" y="0" width="1920" height="1040" />
+    </state>
+    <state x="4021" y="164" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/0.0.1500.960/3000.0.1920.1040@3000.0.1920.1040" timestamp="1604679221479" />
+    <state x="3777" y="434" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1604923812454">
+      <screen x="3000" y="0" width="1920" height="1040" />
+    </state>
+    <state x="3777" y="434" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1500.960/3000.0.1920.1040@3000.0.1920.1040" timestamp="1604923812454" />
+    <state x="3512" y="249" key="com.intellij.xdebugger.impl.breakpoints.ui.BreakpointsDialogFactory$2" timestamp="1604832012030">
+      <screen x="3000" y="0" width="1920" height="1040" />
+    </state>
+    <state x="3512" y="249" key="com.intellij.xdebugger.impl.breakpoints.ui.BreakpointsDialogFactory$2/0.0.1500.960/3000.0.1920.1040@3000.0.1920.1040" timestamp="1604832012030" />
+    <state x="3761" y="426" key="git4idea.remote.GitConfigureRemotesDialog" timestamp="1605358792007">
+      <screen x="3000" y="0" width="1920" height="1040" />
+    </state>
+    <state x="3761" y="426" key="git4idea.remote.GitConfigureRemotesDialog/0.0.1500.960/3000.0.1920.1040@3000.0.1920.1040" timestamp="1605358792007" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <default-breakpoints>
+        <breakpoint type="python-exception">
+          <properties notifyOnTerminate="true" exception="BaseException">
+            <option name="notifyOnTerminate" value="true" />
+          </properties>
+        </breakpoint>
+      </default-breakpoints>
+    </breakpoint-manager>
+    <watches-manager>
+      <configuration name="PythonConfigurationType">
+        <watch expression="_eps" />
+        <watch expression="_eps" />
+        <watch expression="inside" language="Python" />
+      </configuration>
+    </watches-manager>
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/CEGE0096_20198829$main.coverage" NAME="main_from_file Coverage Results" MODIFIED="1604688572166" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/CEGE0096_20198829$main_from_file.coverage" NAME="main_from_file Coverage Results" MODIFIED="1605359439530" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/CEGE0096_20198829$main_from_user.coverage" NAME="main_from_file Coverage Results" MODIFIED="1605298882139" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+  </component>
+</project>
