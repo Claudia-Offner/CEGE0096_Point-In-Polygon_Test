@@ -1,15 +1,10 @@
 import sys
-
-# Sources:
-# MBR: https://stackoverflow.com/questions/20808393/python-defining-a-minimum-bounding-rectangle
-# RCA: https://rosettacode.org/wiki/Ray-casting_algorithm#Python
-# RCA: http://philliplemons.com/posts/ray-casting-algorithm
-# Boundary: https://stackoverflow.com/questions/328107/how-can-you-determine-a-point-is-between-two-other-points-on-a-line-segment
-# Transpose Matrix: https://www.programiz.com/python-programming/examples/transpose-matrix
+""" The sys module is used to provide a max finite float number """
 
 
 def sqrt(n):
-    # Square root function (used in lines 87-89)
+    """ Square root function used in boundary identifying method (lines 87-89) """
+
     if n < 0:
         return
     else:
@@ -17,7 +12,8 @@ def sqrt(n):
 
 
 class Point:
-    # Point Class #
+    """ Point Class """
+
     def __init__(self, name, x, y):
         self.name = name
         self.x = x
@@ -25,15 +21,17 @@ class Point:
 
 
 class Polygon:
-    # Polygon Class #
+    """ Polygon Class """
+
     def __init__(self, points):
         self.points = points
 
     def get_points(self):
+        """ Extract points from object """
         return self.points
 
     def edges(self):
-        # Creates lines from points
+        """ Creates lines from points """
 
         res = []
         for i, p in enumerate(self.points):
@@ -43,15 +41,15 @@ class Polygon:
         return res
 
     def contains(self, point):
-        # RCA Algorithm #
+        """ RCA Algorithm categorising if points are inside or outside a polygon object """
 
         _huge = sys.float_info.max    # act as infinity if we divide by 0
-        _eps = 0.00001     # ensures points are not on the same line as vertexes
+        _eps = 0.00001
 
         inside = False
         for edge in self.edges():
-            # Edge A needs to be the lower point of the edge
             a, b = edge[0], edge[1]
+            # Edge A needs to be the lower point of the edge
             if a.y > b.y:
                 a, b = b, a
 
@@ -71,11 +69,11 @@ class Polygon:
                 continue
 
             try:
-                m_edge = (b.y - a.y) / (b.x - a.x)
+                m_edge = (b.y-a.y) / (b.x-a.x)
             except ZeroDivisionError:
                 m_edge = _huge
             try:
-                m_point = (point.y - a.y) / (point.x - a.x)
+                m_point = (point.y-a.y) / (point.x-a.x)
             except ZeroDivisionError:
                 m_point = _huge
 
@@ -87,16 +85,18 @@ class Polygon:
         return inside
 
     def bound(self, point):
-        # Boundary identifier #
+        """ Identifies points on the boundary of a polygon objects """
 
         boundary = False
         for edge in self.edges():
             a, b = edge[0], edge[1]
 
-            ap = sqrt((a.x - point.x) ** 2 + (a.y - point.y) ** 2)  # Distance between A and point
-            pb = sqrt((point.x - b.x) ** 2 + (point.y - b.y) ** 2)  # Distance between point and B
-            ab = sqrt((a.x - b.x) ** 2 + (a.y - b.y) ** 2)  # Distance between A and B
-
+            # Distance between A and point
+            ap = sqrt((a.x-point.x)**2 + (a.y-point.y)**2)
+            # Distance between point and B
+            pb = sqrt((point.x-b.x)**2 + (point.y-b.y)**2)
+            # Distance between A and B
+            ab = sqrt((a.x-b.x)**2 + (a.y - b.y)**2)
             # The point is on the boundary
             if ap + pb == ab:
                 boundary = not boundary
@@ -106,15 +106,15 @@ class Polygon:
 
 
 class Square(Polygon):
-    # Square Class #
+    """ Square Class """
     def __init__(self, points):
         super().__init__(points)
 
     def basic_mbr(self):
-        # MBR calculator #
-
-        min_x, min_y = 100000, 100000  # start with something much higher than expected min
-        max_x, max_y = -100000, -100000  # start with something much lower than expected max
+        """ Extracts min and max points of a polygon objects MBR """
+        # Use a min higher than expected  and max lower than expected
+        min_x, min_y = 100000, 100000
+        max_x, max_y = -100000, -100000
 
         for item in self.points:
             if item.x < min_x:
@@ -129,14 +129,14 @@ class Square(Polygon):
         return [min_x, min_y, max_x, max_y]
 
     def mbr_box(self):
-        # MBR coordinates #
+        """ Gives MBR square coordinates for plotting """
 
         a = self.basic_mbr()
         min_x, min_y, max_x, max_y = a[0], a[1], a[2], a[3]
         return [[min_x, min_y], [max_x, min_y], [max_x, max_y], [min_x, max_y]]
 
     def get_mbr(self, point):
-        # MBR Algorithm #
+        """ MBR Algorithm categorising if points are inside or outside a polygon object's MBR """
 
         mbr = []
         a = self.basic_mbr()

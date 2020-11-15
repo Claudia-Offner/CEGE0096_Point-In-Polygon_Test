@@ -1,8 +1,12 @@
 from plotter import Plotter
 from pip import Point, Polygon, Square
+""" The plotter module will be used to plot data """
+""" The pip module will be used to run MBR and RCA algorithms """
 
 
 def csv_reader(path):
+    """ Reads csv files line by line as a nested list of floats """
+
     with open(path, 'r') as f:
         data = f.readlines()[1:]
         points = []
@@ -14,6 +18,8 @@ def csv_reader(path):
 
 
 def csv_writer(file):
+    """ Writes nested lists into csv files as strings """
+
     header = ['id', 'category']
     with open('original_output.csv', 'w') as f:
         f.write(str(header).translate({39: None})[1:-1] + '\n')
@@ -22,6 +28,8 @@ def csv_writer(file):
 
 
 def transpose_matrix(matrix):
+    """ Transpose matrix for nested lists """
+
     res = []
     result = [[matrix[j][i] for j in range(len(matrix))] for i in range(len(matrix[0]))]
     for r in result:
@@ -30,6 +38,7 @@ def transpose_matrix(matrix):
 
 
 def main():
+    """ Point in Polygon Test """
 
     # Read data for analysis
     poly_list = csv_reader('polygon.csv')
@@ -60,7 +69,7 @@ def main():
     s = Square([point for point in poly_p])
     p = Polygon([point for point in poly_p])
 
-    ''' Get MBR results '''
+    # GET MBR RESULTS #
 
     # Extract MBR outputs
     mbr_id = [i.name for i in input_p]
@@ -87,7 +96,7 @@ def main():
         point = Point(i[0], i[1], i[2])
         in_mbr.append(point)
 
-    ''' Get BOUNDARY results '''
+    # GET BOUNDARY RESULTS #
 
     # Extract Boundary outputs from points inside mbr
     bound_id = [i.name for i in in_mbr]
@@ -136,7 +145,7 @@ def main():
         point = Point(i[0], i[1], i[2])
         off_bound.append(point)
 
-    ''' Get RCA results '''
+    # GET RCA RESULTS #
 
     # Extract RCA outputs from points not on the boundary and inside the mbr
     rca_id = [i.name for i in off_bound]
@@ -162,7 +171,7 @@ def main():
             rca_out.append(i)
             continue
 
-    ''' Categorise data outputs '''
+    # CATEGORISE DATA OUTPUTS #
 
     # Combine points outside the RCA with points outside the MBR
     for i in rca_out:
@@ -189,7 +198,7 @@ def main():
 
     print('Categorize points: ', final)
 
-    ''' Plot points '''
+    # PLOT POINTS #
 
     # Optimise category outputs for file export
     write_output = transpose_matrix([[int(i) for i in final_plot[0]], final_plot[3]])
