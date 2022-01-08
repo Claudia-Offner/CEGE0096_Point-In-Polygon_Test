@@ -1,4 +1,4 @@
-# CEGE0096_Assignment_1
+# CEGE0096 Assignment 1
 Assignment 1 for Geospatial Programming
 
 ## Input files
