@@ -1,5 +1,5 @@
-# CEGE0096 Assignment 1
-Assignment 1 for Geospatial Programming
+# CEGE0096 Point in Polygon Test
+Assignment 1 for Geospatial Programming. Task: Manually design a point in polygon test without packages. 
 
 ## Input files
 - Input points from a csv file: [inputs.csv](https://github.com/ucesccf/CEGE0096_20198829/blob/master/input.csv)
